@@ -1,0 +1,31 @@
+--- src/libcard/Makefile.am
++++ src/libcard/Makefile.am
+@@ -6,7 +6,7 @@
+ 
+ EXTRA_DIST = libopensc-dnie.pc.in
+ 
+-INCLUDES = $(CPPFLAGS) $(PCSC_CFLAGS) $(OPENSC_CFLAGS) $(ASSUAN_CFLAGS) -I$(top_srcdir)/src/common
++INCLUDES = $(CPPFLAGS) $(OPENSC_CFLAGS) $(CRYPTO_CFLAGS) $(LIBASSUAN_CFLAGS) $(GLIB_CFLAGS) -I$(top_srcdir)/src/common
+ AM_LDFLAGS =
+ 
+ c_sources = \
+@@ -44,14 +44,12 @@
+         card_helper.h \
+         file_compression.h 
+ 
+-lib_LTLIBRARIES = libopensc-dnie.la
+-libopensc_dnie_la_SOURCES = \
++carddriverdir=$(libdir)/opensc/drivers
++carddriver_LTLIBRARIES = card_dnie.la
++card_dnie_la_SOURCES = \
+         $(h_sources) \
+         $(c_sources)
+ 
+ 
+-libopensc_dnie_la_LDFLAGS = -version-info @OPENSC_DNIE_LT_CURRENT@:@OPENSC_DNIE_LT_REVISION@:@OPENSC_DNIE_LT_AGE@
+-libopensc_dnie_la_LIBADD = $(PCSC_LIBS) $(OPENSC_LIBS) $(LTLIBLTDL) $(ASSUAN_LIBS)
+-
+-pkgconfigdir = $(libdir)/pkgconfig
+-pkgconfig_DATA = libopensc-dnie.pc
++card_dnie_la_LDFLAGS = -module -avoid-version
++card_dnie_la_LIBADD = $(OPENSC_LIBS) $(CRYPTO_LIBS) $(LIBASSUAN_LIBS) $(GLIB_LIBS) -lz

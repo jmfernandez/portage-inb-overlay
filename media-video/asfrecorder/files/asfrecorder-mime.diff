@@ -1,0 +1,14 @@
+diff -Nru ASFRecorder/source/asfrecorder.c ASFRecorder-patched/source/asfrecorder.c
+--- ASFRecorder/source/asfrecorder.c	2000-12-16 19:47:42.000000000 +0100
++++ ASFRecorder-patched/source/asfrecorder.c	2005-12-05 20:13:16.000000000 +0100
+@@ -1178,7 +1178,9 @@
+                 hi->contenttype = unknown_content;
+ 
+                 /* Determine whether this is live content or not */
+-                if (!stricmp(ContentType, "application/octet-stream"))
++                if (!stricmp(ContentType, "application/octet-stream") ||
++			!stricmp(ContentType, "application/vnd.ms.wms-hdr.asfv1") ||
++			!stricmp(ContentType, "application/x-mms-framed"))
+                 {
+                     if (strstr(Features, "broadcast"))
+                     {

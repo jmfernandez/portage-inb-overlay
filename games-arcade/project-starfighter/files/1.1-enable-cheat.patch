@@ -1,0 +1,12 @@
+diff -Nru starfighter-1.1/code/Starfighter.cpp starfighter-1.1-cheat/code/Starfighter.cpp
+--- starfighter-1.1/code/Starfighter.cpp	2003-08-18 14:48:23.000000000 +0200
++++ starfighter-1.1-cheat/code/Starfighter.cpp	2005-08-05 03:09:39.000000000 +0200
+@@ -54,7 +54,7 @@
+ 			{printf("Enemy firing disabled\n"); dev.fireAliens = 0;}
+ 		#endif
+ 		if (strcmp(argv[i], "-cheat") == 0)
+-			cheatAttempt = 1;
++			engine.cheat = 1;
+ 		if (strcmp(argv[i], "-noaudio") == 0)
+ 			{printf("No Audio\n"); engine.useAudio = 0;}
+ 		if (strcmp(argv[i], "-mono") == 0)

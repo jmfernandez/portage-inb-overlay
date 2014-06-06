@@ -1,0 +1,11 @@
+--- src/libcard/trusted_channel_card.c
++++ src/libcard/trusted_channel_card.c
+@@ -32,7 +32,7 @@
+ 
+ 
+  /* Here go private and public keys */
+-
++#include "keys.inc"
+ 
+ 
+ /* function copied from libopensc/pkcs15-cert.c */

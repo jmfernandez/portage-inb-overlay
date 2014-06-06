@@ -1,0 +1,201 @@
+--- dsdt.dsl.orig	2006-04-11 16:12:55.000000000 +0200
++++ dsdt.dsl	2006-04-11 23:59:13.000000000 +0200
+@@ -111,7 +111,7 @@
+             {
+                 Package (0x06)
+                 {
+-                    0x0640, 
++                    0x05DC, 
+                     0x5DC0, 
+                     0x0A, 
+                     0x0A, 
+@@ -121,7 +121,7 @@
+ 
+                 Package (0x06)
+                 {
+-                    0x0578, 
++                    0x04B0, 
+                     0x4E20, 
+                     0x0A, 
+                     0x0A, 
+@@ -131,7 +131,7 @@
+ 
+                 Package (0x06)
+                 {
+-                    0x04B0, 
++                    0x03E8, 
+                     0x4650, 
+                     0x0A, 
+                     0x0A, 
+@@ -295,6 +295,7 @@
+         }
+ 
+         Store (0x00, \_SB.SLEE)
++        Return(Package(0x02){0x00, 0x00})
+     }
+ 
+     Scope (_GPE)
+@@ -427,13 +428,13 @@
+                     0x0000, // Address Range Minimum
+                     0x00FF, // Address Range Maximum
+                     0x0000, // Address Translation Offset
+-                    0x0100, 0x00,,)
++                    0x0100,,,)
+                 DWordIO (ResourceProducer, MinFixed, MaxFixed, PosDecode, EntireRange,
+                     0x00000000, // Address Space Granularity
+                     0x00000000, // Address Range Minimum
+                     0x00000CF7, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00000CF8, 0x00,,
++                    0x00000CF8,,,
+                     , TypeStatic)
+                 IO (Decode16, 0x0CF8, 0x0CF8, 0x01, 0x08)
+                 DWordIO (ResourceProducer, MinFixed, MaxFixed, PosDecode, EntireRange,
+@@ -441,119 +442,119 @@
+                     0x00000D00, // Address Range Minimum
+                     0x0000FFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x0000F300, 0x00,,
++                    0x0000F300,,,
+                     , TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000A0000, // Address Range Minimum
+                     0x000BFFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00020000, 0x00,,
++                    0x00020000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000C0000, // Address Range Minimum
+                     0x000C3FFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000C4000, // Address Range Minimum
+                     0x000C7FFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000C8000, // Address Range Minimum
+                     0x000CBFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000CC000, // Address Range Minimum
+                     0x000CFFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000D0000, // Address Range Minimum
+                     0x000D3FFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000D4000, // Address Range Minimum
+                     0x000D7FFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000D8000, // Address Range Minimum
+                     0x000DBFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000DC000, // Address Range Minimum
+                     0x000DFFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000E0000, // Address Range Minimum
+                     0x000E3FFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000E4000, // Address Range Minimum
+                     0x000E7FFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000E8000, // Address Range Minimum
+                     0x000EBFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000EC000, // Address Range Minimum
+                     0x000EFFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00004000, 0x00,,
++                    0x00004000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x000F0000, // Address Range Minimum
+                     0x000FFFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00010000, 0x00,,
++                    0x00010000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x00000000, // Address Range Minimum
+                     0xFEBFFFFF, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00000000, 0x00,,
++                    0x00000000,,,
+                     , AddressRangeMemory, TypeStatic)
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+                     0x00000000, // Address Space Granularity
+                     0x00000000, // Address Range Minimum
+                     0x00000000, // Address Range Maximum
+                     0x00000000, // Address Translation Offset
+-                    0x00000000, 0x00,,
++                    0x00000000,,,
+                     , AddressRangeMemory, TypeStatic)
+             })
+             Method (_CRS, 0, Serialized)
+@@ -4935,6 +4936,10 @@
+                                             Return (0x0F)
+                                         }
+                                     }
++                                    Else
++                                    {
++                                        Return (0x08)
++                                    }
+                                 }
+                                 Else
+                                 {

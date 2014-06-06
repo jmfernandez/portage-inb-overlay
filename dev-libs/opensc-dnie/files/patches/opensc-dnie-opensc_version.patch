@@ -1,0 +1,11 @@
+--- src/libcard/base_card.h
++++ src/libcard/base_card.h
+@@ -17,7 +17,7 @@
+ #include "map_helper.h"
+ 
+ /* definitions */
+-#define MODULE_VERSION "0.11.8"
++#include "../../config.h"
+ #define MODULE_DESC "DNIe card driver"
+ #define MODULE_NAME "dnie"
+ 

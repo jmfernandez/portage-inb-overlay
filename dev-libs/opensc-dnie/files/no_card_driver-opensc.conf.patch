@@ -1,0 +1,10 @@
+--- opensc.conf.orig	2010-07-03 16:54:42.000000000 +0200
++++ opensc.conf	2010-07-03 16:57:45.000000000 +0200
+@@ -119,6 +119,7 @@
+ 	# NOTE: When "internal" keyword is used, must be last entry
+ 	#
+ 	# card_drivers = customcos, internal;
++	card_drivers = dnie;
+ 
+ 	# Card driver configuration blocks.
+ 

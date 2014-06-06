@@ -1,0 +1,12 @@
+diff -Nru purple-events-0.2/src/plugin/callbacks.c purple-events-0.2-patched/src/plugin/callbacks.c
+--- purple-events-0.2/src/plugin/callbacks.c	2012-06-07 22:22:06.000000000 +0200
++++ purple-events-0.2-patched/src/plugin/callbacks.c	2013-06-16 10:42:08.828697975 +0200
+@@ -429,7 +429,7 @@
+ 
+     if ( ( purple_account_get_connection(data->account) != NULL ) && ( ! purple_account_is_connected(data->account) ) )
+         return TRUE;
+-    data->context->just_signed_on_accounts = g_list_remove(data->context->just_signed_on_accounts, data->account);
++    data->context->just_signed_on_accounts = g_list_remove(data->context->just_signed_on_accounts, data);
+ 
+     g_free(data);
+ 

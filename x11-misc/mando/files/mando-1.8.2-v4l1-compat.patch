@@ -1,0 +1,13 @@
+diff -Nru a/src/image_v4linput.h b/src/image_v4linput.h
+--- a/src/image_v4linput.h	2011-11-28 09:24:30.000000000 +0100
++++ b/src/image_v4linput.h	2012-06-14 12:08:35.000685684 +0200
+@@ -2,7 +2,8 @@
+ #define IMAGE_V4LINPUT_H
+ 
+ #include "image_input.h"
+-#include <linux/videodev.h>
++#include <libv4l1-videodev.h>
++#include <asm/types.h>
+ #include "rgba.h"
+ 
+ namespace mimas {
