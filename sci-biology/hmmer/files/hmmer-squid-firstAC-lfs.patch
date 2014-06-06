@@ -1,0 +1,107 @@
+diff -Nru hmmer-2.3.2/squid/configure hmmer-2.3.2-modified/squid/configure
+--- hmmer-2.3.2/squid/configure	2003-10-04 21:01:11.000000000 +0200
++++ hmmer-2.3.2-modified/squid/configure	2005-01-20 16:11:17.150697448 +0100
+@@ -5180,6 +5180,36 @@
+ # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ 
++# --enable-lfs           Large File Summit (LFS) support for >2GB files
++# See: http://ftp.sas.com/standards/large.file/x_open.20Mar96.html
++#
++# Check whether --enable-lfs or --disable-lfs was given.
++if test "${enable_lfs+set}" = set; then
++  enableval="$enable_lfs"
++  case $enable_lfs in
++   yes) { echo "$as_me:$LINENO: configured for optional LFS, large file support" >&5
++echo "$as_me: configured for optional LFS, large file support" >&6;}
++	cat >>confdefs.h <<\_ACEOF
++#define _LARGEFILE_SOURCE 1
++_ACEOF
++
++	cat >>confdefs.h <<\_ACEOF
++#define _LARGEFILE64_SOURCE 1
++_ACEOF
++
++	cat >>confdefs.h <<\_ACEOF
++#define _FILE_OFFSET_BITS 64
++_ACEOF
++
++        ;;
++   no)  ;;
++    *)  echo "Ignoring unknown argument to --enable-lfs: $enable_lfs"
++        ;;
++esac
++fi;
++
++
++
+ # ================================================================
+ # Test for whether we can cheat and treat fpos_t
+ # (used by fgetpos() and fsetpos()) as an arithmetic datatype.
+@@ -6875,36 +6905,6 @@
+ 
+ 
+ 
+-# --enable-lfs           Large File Summit (LFS) support for >2GB files
+-# See: http://ftp.sas.com/standards/large.file/x_open.20Mar96.html
+-#
+-# Check whether --enable-lfs or --disable-lfs was given.
+-if test "${enable_lfs+set}" = set; then
+-  enableval="$enable_lfs"
+-  case $enable_lfs in
+-   yes) { echo "$as_me:$LINENO: configured for optional LFS, large file support" >&5
+-echo "$as_me: configured for optional LFS, large file support" >&6;}
+-	cat >>confdefs.h <<\_ACEOF
+-#define _LARGEFILE_SOURCE 1
+-_ACEOF
+-
+-	cat >>confdefs.h <<\_ACEOF
+-#define _LARGEFILE64_SOURCE 1
+-_ACEOF
+-
+-	cat >>confdefs.h <<\_ACEOF
+-#define _FILE_OFFSET_BITS 64
+-_ACEOF
+-
+-        ;;
+-   no)  ;;
+-    *)  echo "Ignoring unknown argument to --enable-lfs: $enable_lfs"
+-        ;;
+-esac
+-fi;
+-
+-
+-
+ # --enable-pvm       Enable Parallel Virtual Machine (PVM) support
+ #
+ # Sets PVMLIBDIR, PVMINCDIR, PCMPROGS, PVMLIBS output variables
+diff -Nru hmmer-2.3.2/squid/sqio.c hmmer-2.3.2-modified/squid/sqio.c
+--- hmmer-2.3.2/squid/sqio.c	2003-10-04 21:01:13.000000000 +0200
++++ hmmer-2.3.2-modified/squid/sqio.c	2004-11-22 05:03:04.000000000 +0100
+@@ -904,6 +904,7 @@
+ {
+   char *sptr;
+   int   i;
++  int   gotAC;
+ 
+ 				/* make sure we have first line */
+   while (!feof(V->f) && strncmp(V->buf, "ID  ", 4) != 0) {
+@@ -917,12 +918,16 @@
+       SetSeqinfoString(V->sqinfo, sptr, SQINFO_ID);
+     }
+ 
++  gotAC = 0;
+   do {
+     SeqfileGetLine(V);
+-    if (!feof(V->f) && strstr(V->buf, "AC  ") == V->buf)
++    if (!feof(V->f) && strstr(V->buf, "AC  ") == V->buf && !gotAC)
+       {
+ 	if ((sptr = strtok(V->buf+5, ";  \t\n")) != NULL)
+-	  SetSeqinfoString(V->sqinfo, sptr, SQINFO_ACC);
++	  {
++	    SetSeqinfoString(V->sqinfo, sptr, SQINFO_ACC);
++	    gotAC = 1;
++	  }
+       }
+     else if (!feof(V->f) && strstr(V->buf, "DE  ") == V->buf)
+       {

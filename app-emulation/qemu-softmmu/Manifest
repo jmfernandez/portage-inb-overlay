@@ -1,0 +1,3 @@
+MD5 cd6b351350af571ee58cee313c86023d files/digest-qemu-softmmu-0.8.1-r1 130
+MD5 3ab13f469da3d5af5b5d26ff45ea1a16 files/qemu-0.8.1-mouse.patch 515
+MD5 0562f887e9f5c2d3ef0fcf046a3645aa qemu-softmmu-0.8.1-r1.ebuild 2722

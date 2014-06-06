@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Exec=/opt/bin/pollo
+Icon=/usr/share/icons/pollo_icon.gif
+Name=Pollo XML Editor
+GenericName=XML Editor
+Comment=XML file editor
+Categories=Application;Development

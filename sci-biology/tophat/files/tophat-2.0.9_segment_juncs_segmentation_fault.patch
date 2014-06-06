@@ -1,0 +1,57 @@
+diff -Nru tophat-2.0.9-orig/src/segment_juncs.cpp tophat-2.0.9/src/segment_juncs.cpp
+--- tophat-2.0.9-orig/src/segment_juncs.cpp	2013-03-20 14:26:11.000000000 +0100
++++ tophat-2.0.9/src/segment_juncs.cpp	2014-02-26 16:12:23.331940228 +0100
+@@ -3270,6 +3270,8 @@
+ 		}
+ 
+ 	      RefSequenceTable::Sequence* ref_str = rt.get_seq(rightHit.ref_id());
++	      if(ref_str==NULL)
++	      	continue;
+ 
+ 	      const int part_seq_len = inner_dist_std_dev > inner_dist_mean ? inner_dist_std_dev - inner_dist_mean : 0;
+ 	      const int flanking_seq_len = inner_dist_mean + inner_dist_std_dev;
+@@ -3278,7 +3280,7 @@
+ 	      size_t left = 0;
+ 	      if (rightHit.antisense_align())
+ 		{
+-		  if (flanking_seq_len <= rightHit.left())
++		  if (flanking_seq_len <= rightHit.left() && ref_str!=NULL)
+ 		    {
+ 		      left = rightHit.left() - flanking_seq_len;
+ 		      right_flanking_seq = seqan::infix(*ref_str, left, left + flanking_seq_len + part_seq_len);
+@@ -3288,7 +3290,7 @@
+ 		}
+ 	      else
+ 		{
+-		  if (part_seq_len <= rightHit.right())
++		  if (part_seq_len <= rightHit.right() && ref_str!=NULL)
+ 		    {
+ 		      left = rightHit.right() - part_seq_len;
+ 		      right_flanking_seq = seqan::infix(*ref_str, left, left + flanking_seq_len + part_seq_len);
+@@ -3549,6 +3551,8 @@
+ 		continue;
+ 	      
+ 	      RefSequenceTable::Sequence* ref_str = rt.get_seq(rightHit.ref_id());
++	      if(ref_str==NULL)
++	      	continue;
+ 	      const int part_seq_len = inner_dist_std_dev > inner_dist_mean ? inner_dist_std_dev - inner_dist_mean : 0;
+ 	      const int flanking_seq_len = inner_dist_mean + inner_dist_std_dev;
+ 	      
+@@ -3556,7 +3560,7 @@
+ 	      size_t left = 0;
+ 	      if (rightHit.antisense_align())
+ 		{
+-		  if (flanking_seq_len <= rightHit.left())
++		  if (flanking_seq_len <= rightHit.left() && ref_str!=NULL)
+ 		    {
+ 		      left = rightHit.left() - flanking_seq_len;
+ 		      right_flanking_seq = seqan::infix(*ref_str, left, left + flanking_seq_len + part_seq_len);
+@@ -3566,7 +3570,7 @@
+ 		}
+ 	      else
+ 		{
+-		  if (part_seq_len <= rightHit.right())
++		  if (part_seq_len <= rightHit.right() && ref_str!=NULL)
+ 		    {
+ 		      left = rightHit.right() - part_seq_len;
+ 		      right_flanking_seq = seqan::infix(*ref_str, left, left + flanking_seq_len + part_seq_len);

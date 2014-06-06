@@ -1,0 +1,25 @@
+--- easel/Makefile.in
++++ easel/Makefile.in
+@@ -52,8 +52,7 @@
+ SIMDFLAGS= @SIMD_CFLAGS@
+ CPPFLAGS = @CPPFLAGS@
+ LDFLAGS  = @LDFLAGS@
+-LIBGSL   = @LIBGSL@
+-LIBS     = @LIBS@ @PTHREAD_LIBS@
++LIBS     = @LIBS@ @LIBGSL@ @PTHREAD_LIBS@
+ 
+ # Other tools
+ #
+@@ -452,8 +451,8 @@
+           else DFILE=${srcdir}/esl_$${BASENAME}.c ;\
+         fi ;\
+ 	if test ${V}; \
+-	   then echo "${CC} ${CFLAGS} ${SIMDFLAGS} ${DEFS} ${LDFLAGS} -o $@ -I. -I${srcdir} -L. -D$${DFLAG} $${DFILE} -leasel -lm" ;\
++	   then echo "${CC} ${CFLAGS} ${SIMDFLAGS} ${DEFS} ${LDFLAGS} -o $@ -I. -I${srcdir} -L. -D$${DFLAG} $${DFILE} -leasel -lm ${LIBS}" ;\
+ 	   else echo '    ' GEN $@ ;\
+ 	fi ;\
+-	${CC} ${CFLAGS} ${SIMDFLAGS} ${DEFS} ${LDFLAGS} -o $@ -I. -I${srcdir} -L. -D$${DFLAG} $${DFILE} -leasel -lm
++	${CC} ${CFLAGS} ${SIMDFLAGS} ${DEFS} ${LDFLAGS} -o $@ -I. -I${srcdir} -L. -D$${DFLAG} $${DFILE} -leasel -lm ${LIBS}
+ 
+ # install:   installs libeasel.a in ${libdir}/
+ #            installs Easel headers in ${includedir}/

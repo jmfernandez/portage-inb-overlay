@@ -1,0 +1,15 @@
+# Mongodb essentials
+RETHINKDB_CONFIG="/etc/rethinkdb"
+RETHINKDB_EXEC="/usr/bin/mongod"
+RETHINKDB_RUN="/var/run/mongodb"
+RETHINKDB_DATA="/var/lib/mongodb"
+RETHINKDB_USER="rethinkdb"
+
+# Listen to specified IP, comment this to listen to all
+RETHINKDB_IP="127.0.0.1"
+
+# Listen to specified port
+RETHINKDB_PORT="27017"
+
+# Set extra options here, such as disabling the admin web server
+RETHINKDB_OPTIONS=""

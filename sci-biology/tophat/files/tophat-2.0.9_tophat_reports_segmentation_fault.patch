@@ -1,0 +1,12 @@
+diff -Nru tophat-2.0.9-orig/src/tophat_reports.cpp tophat-2.0.9/src/tophat_reports.cpp
+--- tophat-2.0.9-orig/src/tophat_reports.cpp	2013-06-27 19:46:41.000000000 +0200
++++ tophat-2.0.9/src/tophat_reports.cpp	2014-02-26 17:11:59.894086879 +0100
+@@ -1386,6 +1386,8 @@
+ 			new_bh.qual(bh.qual());
+ 
+ 			const RefSequenceTable::Sequence* ref_str = rt.get_seq(bh.ref_id());
++			if(ref_str==NULL)
++				continue;
+ 
+ 			if (new_left >= 0 && new_bh.right() <= (int)length(*ref_str))
+ 			  {

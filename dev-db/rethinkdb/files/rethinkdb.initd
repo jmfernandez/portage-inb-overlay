@@ -1,0 +1,46 @@
+#!/sbin/runscript
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+depend() {
+	use net
+}
+
+start() {
+	checkpath -d -m 0750 -o "${RETHINKDB_USER}":rethinkdb "${RETHINKDB_RUN}"
+
+	# We check for active configurations .
+	if ! ls "$RETHINKDB_CONFIG"/instances.d/*.conf >/dev/null 2>/dev/null ; then
+	    echo "rethinkdb: No instances defined in $RETHINKDB_CONFIG/instances.d/"
+	    echo "rethinkdb: See http://www.rethinkdb.com/docs/guides/startup/ for more information" ;
+	    exit
+	fi
+
+	# Listen to MONGODB_IP if configured
+	[ -z "${RETHINKDB_IP}" ] || RETHINKDB_OPTIONS="--bind ${RETHINKDB_IP} ${MONGODB_OPTIONS}"
+
+	# Baselayout-1 user should use --chuid instead of --user
+	local USEROPT="--user"
+	if [ ! -f /etc/init.d/sysfs ]; then
+		USEROPT="--chuid"
+	fi
+
+	ebegin "Starting ${SVCNAME}"
+	start-stop-daemon --background --start \
+		${USEROPT} ${RETHINKDB_USER:-rethinkdb} \
+		--exec ${RETHINKDB_EXEC:-/usr/bin/rethinkdb} \
+		-- \
+		--daemon \
+		--pid-file ${RETHINKDB_RUN:-/var/run/rethinkdb}/${SVCNAME}.pid \
+		--driver-port ${RETHINKDB_PORT:-28015} \
+		-d ${RETHINKDB_DATA:-/var/lib/rethinkdb} \
+		--log-file /var/log/rethinkdb/${SVCNAME}.log \
+		${RETHINKDB_OPTIONS}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping ${SVCNAME}"
+	start-stop-daemon --stop --pidfile ${RETHINKDB_RUN:-/var/run/rethinkdb}/${SVCNAME}.pid
+	eend $?
+}

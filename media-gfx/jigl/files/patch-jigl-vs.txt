@@ -1,0 +1,332 @@
+--- jigl-vs.pl	2006-01-27 12:15:03.000000000 +0100
++++ jigl-vs.pl	2006-05-29 01:27:36.000000000 +0200
+@@ -20,6 +20,7 @@
+ #
+ ####################
+ # Author: Jason Paul
++# Parallel computation by Vincent Stehlé <vincent.stehle@free.fr>
+ 
+ use Getopt::Long;       # options parsing
+ use Text::ParseWords;   # for converting the config options into an array
+@@ -63,6 +64,17 @@
+ my $gblInfoTmpl  = $gblThemeDir . "/default/" . $infoTmpl;  # global info template
+ my @imgMgkVer    = &checkSiteInstall;  # check for img tools; return ImageMagick ver
+ 
++###########################################################
++#
++# MP_MAX_JOBS
++#
++# Description:
++#   Maximum number of parallel jobs to run at most.
++#   We set this to the number of cpu in the system.
++#
++###########################################################
++my $MP_MAX_JOBS = mp_detect_cpu();
++
+ ######################
+ ### end variable setup
+ ######################
+@@ -343,6 +355,161 @@
+ }
+ 
+ ###########################################################
++#
++# mp_jobs
++#
++# Description:
++#   Temporary hash, to track the running jobs. Keys are
++#   the jobs pids. Values are the message to print in case
++#   of non-zero return code, when die-ing.
++#
++###########################################################
++my %mp_jobs;
++
++###########################################################
++#
++# mp_debug
++#
++# Description:
++#   Debug printing for mp_ functions.
++#
++###########################################################
++sub mp_debug($)
++{
++#    print "mp[$$]: ". $_[0];
++}
++
++###########################################################
++#
++# mp_detect_cpu
++#
++# Description:
++#   Detect the number of cpu present in the system.
++#
++# Fixme:
++#   This is Linux only for now.
++#   This could be more eleguant.
++#
++###########################################################
++sub mp_detect_cpu
++{
++    my $r = `grep processor /proc/cpuinfo |wc -l`;
++    mp_debug("Detected $r cpu.\n");
++    return $r;
++}
++
++###########################################################
++#
++# mp_wait_jobs
++#
++# Description:
++#   Wait for children until there are n running jobs
++#   or less.
++#
++###########################################################
++sub mp_wait_jobs($)
++{
++    my($n) = @_;
++
++    while(1){
++        my $running = scalar(keys %mp_jobs);
++        mp_debug("$running job(s) currently running.\n");
++        
++        last if $running <= $n;
++
++        mp_debug("Waiting...\n");
++
++        # Wait for a job to finish.
++        my $c = wait();
++        my $rc = $?;
++        mp_debug("-> $c ($rc)\n");
++
++        # Sanity checks.
++        if($c < 0){
++            print "mp: wait() returned $c. Strange!\n";
++        }
++
++        if(!exists $mp_jobs{$c}){
++            print "mp: wait() returned $c, but job is not"
++                    ." in mp_jobs. Strange!\n";
++        }
++
++        # Check the return code and die if non-zero.
++        die $mp_jobs{$c} if $rc;
++
++        # Forget job.
++        delete $mp_jobs{$c};
++    }
++}
++
++###########################################################
++#
++# mp_wait_for_free_slot
++#
++# Description:
++#   Wait for a free slot. This is done before launching
++#   one more job in parallel.
++#
++###########################################################
++sub mp_wait_for_free_slot()
++{
++    mp_wait_jobs($MP_MAX_JOBS - 1);
++}
++
++###########################################################
++#
++# mp_wait_for_all_jobs
++#
++# Description:
++#   Wait for all children until there are no more running.
++#
++###########################################################
++sub mp_wait_for_all_jobs()
++{
++    mp_wait_jobs(0);
++}
++
++###########################################################
++#
++# mp_launch
++#
++# Description:
++#   Like "system", but forked in parallel.
++#
++# Arguments:
++#   $_[0]: Command to launch.
++#   $_[1]: Die message, in case of non-zero return code.
++#
++# Notes:
++#   We ensure not to exceed the maximum number of slots
++#   allowed.
++#
++###########################################################
++sub mp_launch($$)
++{
++    my($cmd, $die_msg) = @_;
++
++    # Wait for a free slot first.
++    mp_wait_for_free_slot();
++
++    # Ok, fork.
++    my $r = fork();
++    
++    if(!$r){
++        # We are in the child.
++        # Do the job.
++        mp_debug("Running $cmd.\n");
++        exec($cmd);
++
++    } else {
++        # We are in the father.
++        # Remember the child as well as the die msg.
++        mp_debug("Launched $r.\n");
++        $mp_jobs{$r} = $die_msg;
++    }
++}
++
++###########################################################
+ # getWatermarkProg - determine what program we have that can watermark.
+ # older versions of ImageMagick use the program 'combine'. Newer versions
+ # use 'composite'. We'll check and see which one you have installed.
+@@ -1216,6 +1383,8 @@
+     }
+ 
+     # generate thumbnail for each image
++    # First pass: scale all images. This is done in parallel
++    # if possible, with jobs launched in the background.
+     for $i (0 .. $#{$albumInfo->{images}}) {
+         # get the name of the file and create the thumbnail filename
+         # store the name of the thumbnail for this image in the albumInfo
+@@ -1230,7 +1399,7 @@
+             print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}}+1) . "\) Scaling $tmpThumbFile $msgPad";
+             $cmd = "$scaleProg -scale x$opts{ty} -sharpen 5 \"$tmpFile\" \"$tmpThumbFile\"";
+             $dieMsg = "\nCannot scale the thumbnail image $tmpThumbFile!\n";
+-            system($cmd) == 0 or die $dieMsg;
++            mp_launch($cmd, $dieMsg);
+ 
+             # increment the generated count
+             $genCnt++;
+@@ -1239,13 +1408,21 @@
+             print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}} + 1) . "\) Skipping $tmpThumbFile $msgPad";
+             $skipCnt++;
+         }
++    }
+ 
++    # Wait for all processes to complete.
++    mp_wait_for_all_jobs();
++
++    # Second pass: now that all images have been converted,
++    # we can get all images informations.
++    for $i (0 .. $#{$albumInfo->{images}}) {
+         # get the files size and X,Y info for the slide
+         @tmpArr = &getImgInfo($albumInfo->{images}[$i]->{thumb});
+         $albumInfo->{images}[$i]->{thumbkb} = $tmpArr[0];
+         $albumInfo->{images}[$i]->{thumbx}  = $tmpArr[1];
+         $albumInfo->{images}[$i]->{thumby}  = $tmpArr[2];
+     }
++
+     print "\r"; # move back to the start of the line
+     print "$genCnt thumbnails generated. $msgPad\n" if $genCnt > 0;
+     print "$skipCnt thumbnails skipped because they already existed.\n" if $skipCnt > 0;
+@@ -1284,6 +1461,12 @@
+     }
+ 
+     # generate slide for each image
++    # First pass: scale all images. This is done in parallel
++    # if possible, with jobs launched in the background.
++    # Also, we remember if watermarking is necessary for the
++    # next pass.
++    my %may_need_watermarking;
++
+     for $i (0 .. $#{$albumInfo->{images}}) {
+         # get the name of the file and create the slide filename
+         $tmpFile = $albumInfo->{images}[$i]->{file};
+@@ -1304,45 +1487,67 @@
+         if (($opts{fs} or (!(-e $tmpSlideFile))) && !($opts{uo})) {
+             # scale the image to the slide size specs
+             print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}}+1) . "\) Scaling $tmpSlideFile $msgPad";
++
+             # only scale the slide if it's Y height is greater than
+             # the value of the sy option.
+             if ($albumInfo->{images}[$i]->{height} > $opts{sy}) {
+                 $cmd = "$scaleProg -scale x$opts{sy} -sharpen 5 \"$tmpFile\" \"$tmpSlideFile\"";
+-                $dieMsg = "\nCannot scale the slide image!\n";
+-                system($cmd) == 0 or die $dieMsg;
++                $dieMsg = "\nCannot scale the slide image $tmpSlideFile!\n";
++                mp_launch($cmd, $dieMsg);
++
+             } else {
+                 $dieMsg = "Cannot copy \"$tmpFile\" to \"$tmpSlideFile\"\n";
+                 copy $tmpFile,$tmpSlideFile or die "$dieMsg $!\n";
+             }
+ 
+-            # if we're watermarking the slides, do it now.
+-            if ($opts{ws}) {
+-                # check to make sure we have a valid watermark program
+-                # and that the watermark image exists
+-                if ($waterMarkProg eq "none") {
+-                    print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}}+1) ."\) CANNOT Watermark $tmpSlideFile. No Watermark program found! $msgPad";
+-                } else {
+-                    print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}}+1) ."\) Watermarking $tmpSlideFile $msgPad";
+-                    if ($waterMarkProg eq "composite") {
+-                        $cmd = "$waterMarkProg -compose over -gravity $opts{wg} $opts{wf} \"$tmpSlideFile\" \"$tmpSlideFile\"";
+-                    } else {
+-                        # combine reversed the order the image and watermark
+-                        # were listed on the command line.
+-                        $cmd = "$waterMarkProg -compose over -gravity $opts{wg} \"$tmpSlideFile\" $opts{wf} \"$tmpSlideFile\"";
+-                    }
+-                    $dieMsg = "\nCannot watermark the slide image!\n";
+-                    system($cmd) == 0 or die $dieMsg;
+-                }
+-            }
++            # Remember that this slide may need watermarking.
++            $may_need_watermarking{$i} = 1;
+ 
+             # increment the generated count
+             $genCnt++;
++
+         } else {
+             # increment the skipped count
+             print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}}+1) . "\) Skipping $tmpSlideFile $msgPad";
+             $skipCnt++;
+         }
++    }
++
++    # Wait for all processes to complete.
++    mp_wait_for_all_jobs();
++
++    # Second pass: watermarking. We do this in parallel too.
++    # Note that we do this pass only if necessary.
++    if ($opts{ws}) {
++        for $i (0 .. $#{$albumInfo->{images}}) {
++            next if !exists $may_need_watermarking{$i};
++
++            # check to make sure we have a valid watermark program
++            # and that the watermark image exists
++            if ($waterMarkProg eq "none") {
++                print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}}+1) ."\) CANNOT Watermark $tmpSlideFile. No Watermark program found! $msgPad";
++
++            } else {
++                print "\r\(" . ($i+1) . "/" . ($#{$albumInfo->{images}}+1) ."\) Watermarking $tmpSlideFile $msgPad";
++                if ($waterMarkProg eq "composite") {
++                    $cmd = "$waterMarkProg -compose over -gravity $opts{wg} $opts{wf} \"$tmpSlideFile\" \"$tmpSlideFile\"";
++                } else {
++                    # combine reversed the order the image and watermark
++                    # were listed on the command line.
++                    $cmd = "$waterMarkProg -compose over -gravity $opts{wg} \"$tmpSlideFile\" $opts{wf} \"$tmpSlideFile\"";
++                }
++                $dieMsg = "\nCannot watermark the slide image $tmpSlideFile!\n";
++                mp_launch($cmd, $dieMsg);
++            }
++        }
+ 
++        # Wait for all processes to complete.
++        mp_wait_for_all_jobs();
++    }
++
++    # Third pass: now that all slide have been generated, we can get
++    # the images informations.
++    for $i (0 .. $#{$albumInfo->{images}}) {
+         # get the image info for the slide
+         if ($opts{uo}) {
+             # we're using the originals and already have the

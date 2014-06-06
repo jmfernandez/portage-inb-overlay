@@ -1,0 +1,7 @@
+MD5 f009432a1e8b29f4833a4b638823590b files/digest-tvtime-1.0.2-r1 65
+MD5 f868d4bcfd4c67150a6b209d3cddf1b6 files/tvtime-0.9.10-make.patch 4489
+MD5 c782789825dfa664e1f6fcc96ac7246c files/tvtime-1.0.2-gcc41.patch 2114
+MD5 f9c275d318bff5a5674d123385ed3be2 files/tvtime-1.0.2-videoinput.patch 484
+MD5 7716009f7064bdae850d1464e33f455d files/tvtime-1.0.2-xinerama.patch 1292
+MD5 4bc08a98c7cc134accb89aea3018c2f6 files/tvtime-pic.patch 254
+MD5 03267e0e7d78bc1e902d99dfad4d0548 tvtime-1.0.2-r1.ebuild 1851

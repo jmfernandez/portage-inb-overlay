@@ -1,0 +1,12 @@
+--- pl/pjparse.c.old	2014-04-17 11:53:22.473562905 +0800
++++ pl/pjparse.c	2014-04-17 11:56:30.710036555 +0800
+@@ -120,7 +120,8 @@
+    source table. */
+ static const pjl_fontsource_t pjl_fontsource_table[] = {
+     {"I",
+-     "%rom%ttfonts/;fonts/;urwfonts/;/windows/fonts/;/win95/fonts/;/winnt/fonts/"},
++//     "%rom%ttfonts/;fonts/;urwfonts/;/windows/fonts/;/win95/fonts/;/winnt/fonts/"},
++     "%rom%ttfonts/;fonts/;urwfonts/;/usr/share/fonts/pclfonts/"},
+     {"C", "CART0/", ""},
+     {"C1", "CART1/", ""},
+     {"C2", "CART2/", ""},

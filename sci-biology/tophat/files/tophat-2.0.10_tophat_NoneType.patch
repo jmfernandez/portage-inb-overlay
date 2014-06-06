@@ -1,0 +1,21 @@
+diff -Nru tophat-2.0.9-orig/src/tophat.py tophat-2.0.9/src/tophat.py
+--- tophat-2.0.9-orig/src/tophat.py	2013-06-26 17:37:23.000000000 +0200
++++ tophat-2.0.9/src/tophat.py	2014-02-26 16:20:31.924960262 +0100
+@@ -1420,7 +1420,7 @@
+            temp_sam_header_file.close()
+            temp_sam_header_file = open(temp_sam_header_filename, "r")
+ 
+-        bowtie_sam_header_filename = tmp_dir + idx_prefix.split('/')[-1]
++        bowtie_sam_header_filename = tmp_dir + str(idx_prefix).split('/')[-1]
+         if name != "":
+              bowtie_sam_header_filename += ("_" + name)
+         bowtie_sam_header_filename += ".bwt.samheader.sam"
+@@ -2105,7 +2105,7 @@
+            mapping_type = _reads_vs_G,
+            multihits_out = None): #only --prefilter-multihits should activate this parameter for the initial prefilter search
+     start_time = datetime.now()
+-    bwt_idx_name = bwt_idx_prefix.split('/')[-1]
++    bwt_idx_name = str(bwt_idx_prefix).split('/')[-1]
+     reads_file=reads_list[0]
+     readfile_basename=getFileBaseName(reads_file)
+ 
