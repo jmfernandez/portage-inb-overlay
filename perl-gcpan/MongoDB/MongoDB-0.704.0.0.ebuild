@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-MODULE_AUTHOR="FRIEDO"
+MODULE_AUTHOR="MONGODB"
 
 
 inherit perl-module
