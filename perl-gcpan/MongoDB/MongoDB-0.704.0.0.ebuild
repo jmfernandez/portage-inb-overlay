@@ -4,6 +4,8 @@
 
 EAPI="2"
 
+MY_P=${PN}-v${PV}
+S=${WORKDIR}/${MY_P}
 MODULE_AUTHOR="MONGODB"
 
 
