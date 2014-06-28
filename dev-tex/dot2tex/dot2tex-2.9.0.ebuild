@@ -6,15 +6,11 @@ EAPI=5
 
 PYTHON_COMPAT=( python{2_5,2_6,2_7} pypy{1_9,2_0} )
 
-EHG_REPO_URI="https://code.google.com/p/dot2tex/"
-EHG_REVISION="c31a5296fc1b"
-inherit distutils-r1 mercurial
-
-
+inherit distutils-r1
 
 DESCRIPTION="A Graphviz to LaTeX converter"
 HOMEPAGE="http://code.google.com/p/dot2tex/"
-#SRC_URI="http://dot2tex.googlecode.com/files/${P}.tar.gz"
+SRC_URI="https://github.com/kjellmf/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -22,7 +18,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86
 IUSE="doc examples"
 
 DEPEND=""
-RDEPEND="virtual/pyparsing[${PYTHON_USEDEP}]
+RDEPEND=">=dev-python/pyparsing-2.0
 	media-gfx/pydot[${PYTHON_USEDEP}]
 	media-gfx/graphviz"
 
