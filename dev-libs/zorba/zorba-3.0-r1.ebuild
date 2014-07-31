@@ -65,8 +65,6 @@ DEPEND="${RDEPEND}
 	ruby? ( dev-lang/swig )
 	"
 
-MAKEOPTS+=" -j4"
-
 pkg_setup() {
 	if use python; then
 		python_pkg_setup
@@ -88,8 +86,6 @@ src_prepare() {
 }
 
 src_configure() {
-    filter-flags -j?
-	
 	local mycmakeargs=(
 		$(cmake-utils_use !curl ZORBA_SUPPRESS_CURL)
 		$(cmake-utils_use !unicode ZORBA_NO_ICU)
