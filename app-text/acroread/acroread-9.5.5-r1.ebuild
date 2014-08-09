@@ -138,7 +138,7 @@ ENDOFFILE
 	mv Adobe/Reader9/Browser/intellinux/nppdf.so Adobe/Reader9/Browser/intellinux/nppdf.so.orig || die
 	bspatch Adobe/Reader9/Browser/intellinux/nppdf.so.orig Adobe/Reader9/Browser/intellinux/nppdf.so "${WORKDIR}/nppdf.so.patch" || die
 	# As bspatch does not tell about failed patching, let's inspect the result'
-	cmp Adobe/Reader9/Browser/intellinux/nppdf.so.orig Adobe/Reader9/Browser/intellinux/nppdf.so || die "Patch failed"
+	cmp Adobe/Reader9/Browser/intellinux/nppdf.so.orig Adobe/Reader9/Browser/intellinux/nppdf.so && die "Patch failed"
 	rm Adobe/Reader9/Browser/intellinux/nppdf.so.orig || die
 }
 
