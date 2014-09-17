@@ -4,13 +4,13 @@
 
 EAPI=5
 
-MODULE_AUTHOR="CLAESJAC"
-MODULE_VERSION="1.16"
+MODULE_AUTHOR="GWILLIAMS"
+MODULE_VERSION="1.009"
 
 
 inherit perl-module
 
-DESCRIPTION="Allowes JavaScript execution withing Perl"
+DESCRIPTION="Framework to parse, serialize and store RDF"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
@@ -18,4 +18,23 @@ KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh
 IUSE=""
 
 DEPEND="dev-perl/Test-Exception
+	perl-gcpan/Algorithm-Combinatorics
+	dev-perl/TryCatch
+	dev-perl/set-scalar
+	dev-perl/Log-Log4perl
+	>=dev-perl/Moose-2.60.400
+	perl-gcpan/XML-Namespace
+	>=dev-perl/XML-LibXML-2.1.400
+	dev-perl/Data-UUID
+	dev-perl/Text-CSV
+	perl-gcpan/MooseX-ArrayRef
+	dev-perl/HTTP-Negotiate
+	dev-perl/Text-Table
+	>=dev-perl/XML-SAX-0.990.0
+	>=perl-gcpan/XML-CommonNS-0.06
+	>=dev-perl/DBD-SQLite-1.400.0
+	perl-gcpan/DBIx-Connector
+	>=dev-perl/URI-1.600.0
+	perl-gcpan/Test-JSON
+	dev-perl/DBI
 	dev-lang/perl"

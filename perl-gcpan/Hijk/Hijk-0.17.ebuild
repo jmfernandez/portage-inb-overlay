@@ -4,13 +4,13 @@
 
 EAPI=5
 
-MODULE_AUTHOR="CLAESJAC"
-MODULE_VERSION="1.16"
+MODULE_AUTHOR="AVAR"
+MODULE_VERSION="0.17"
 
 
 inherit perl-module
 
-DESCRIPTION="Allowes JavaScript execution withing Perl"
+DESCRIPTION="Specialized HTTP client"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
@@ -18,4 +18,5 @@ KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh
 IUSE=""
 
 DEPEND="dev-perl/Test-Exception
+	dev-perl/Plack
 	dev-lang/perl"
