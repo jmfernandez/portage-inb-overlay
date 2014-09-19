@@ -36,7 +36,7 @@ src_install() {
 	java-pkg_dojar "${PN}.jar" lib/*.jar
 	dodir /usr/share/${PN}/lib/lib/
 	for jar in lib/*.jar ; do
-		dosym ../${jar} /usr/share/${PN}/lib/lib/${jar}
+		dosym ../$(basename ${jar}) /usr/share/${PN}/lib/${jar}
 	done
 
 	java-pkg_dolauncher "${PN}" --jar "${PN}.jar"
