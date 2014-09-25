@@ -10,31 +10,31 @@ MODULE_VERSION="1.009"
 
 inherit perl-module
 
-DESCRIPTION="Framework to parse, serialize and store RDF"
+DESCRIPTION="An RDF Framework for Perl"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh sparc sparc-fbsd x86 x86-fbsd   ppc-aix x86-freebsd x64-freebsd sparc64-freebsd hppa-hpux ia64-hpux x86-interix amd64-linux arm-linux ia64-linux ppc64-linux x86-linux ppc-macos x86-macos x64-macos m68k-mint x86-netbsd ppc-openbsd x86-openbsd x64-openbsd sparc-solaris sparc64-solaris x64-solaris x86-solaris x86-winnt x86-cygwin"
 IUSE=""
 
-DEPEND="dev-perl/Test-Exception
-	perl-gcpan/Algorithm-Combinatorics
-	dev-perl/TryCatch
-	dev-perl/set-scalar
-	dev-perl/Log-Log4perl
-	>=dev-perl/Moose-2.60.400
-	perl-gcpan/XML-Namespace
-	>=dev-perl/XML-LibXML-2.1.400
+DEPEND="dev-perl/Text-CSV
 	dev-perl/Data-UUID
-	dev-perl/Text-CSV
-	perl-gcpan/MooseX-ArrayRef
-	dev-perl/HTTP-Negotiate
-	dev-perl/Text-Table
-	>=dev-perl/XML-SAX-0.990.0
-	>=perl-gcpan/XML-CommonNS-0.06
+	dev-perl/TryCatch
 	>=dev-perl/DBD-SQLite-1.400.0
-	perl-gcpan/DBIx-Connector
+	perl-gcpan/MooseX-ArrayRef
 	>=dev-perl/URI-1.600.0
-	perl-gcpan/Test-JSON
+	perl-gcpan/XML-Namespace
+	dev-perl/Text-Table
+	perl-gcpan/Algorithm-Combinatorics
+	>=perl-gcpan/XML-CommonNS-0.06
+	dev-perl/Log-Log4perl
+	>=dev-perl/XML-SAX-0.990.0
+	>=dev-perl/XML-LibXML-2.1.400
+	dev-perl/HTTP-Negotiate
+	>=dev-perl/Moose-2.60.400
+	perl-gcpan/DBIx-Connector
+	dev-perl/set-scalar
 	dev-perl/DBI
+	perl-gcpan/Test-JSON
+	dev-perl/Test-Exception
 	dev-lang/perl"
