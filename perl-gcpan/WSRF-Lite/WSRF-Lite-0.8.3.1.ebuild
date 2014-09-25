@@ -17,20 +17,20 @@ SLOT="0"
 KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh sparc sparc-fbsd x86 x86-fbsd   ppc-aix x86-freebsd x64-freebsd sparc64-freebsd hppa-hpux ia64-hpux x86-interix amd64-linux arm-linux ia64-linux ppc64-linux x86-linux ppc-macos x86-macos x64-macos m68k-mint x86-netbsd ppc-openbsd x86-openbsd x64-openbsd sparc-solaris sparc64-solaris x64-solaris x86-solaris x86-winnt x86-cygwin"
 IUSE=""
 
-DEPEND=">=perl-gcpan/HTTP-Daemon-SSL-1.04
+DEPEND=">=dev-perl/XML-DOM-1.440.0
 	>=dev-perl/DateTime-TimeZone-1.640.0
-	>=dev-perl/Sys-Hostname-Long-1.400.0
-	>=perl-gcpan/DateTime-Format-Epoch-0.13
+	>=perl-gcpan/HTTP-Daemon-SSL-1.04
+	>=dev-perl/HTTP-Daemon-6.10.0
+	>=dev-perl/DateTime-Locale-0.450.0
+	>=dev-perl/Crypt-OpenSSL-RSA-0.280.0
 	>=dev-perl/XML-LibXML-2.1.400
 	>=dev-perl/DateTime-Format-W3CDTF-0.60.0
-	>=dev-perl/Crypt-OpenSSL-RSA-0.280.0
-	>=dev-perl/XML-DOM-1.440.0
-	>=dev-perl/Digest-SHA1-2.130.0
-	>=perl-gcpan/Crypt-OpenSSL-X509-1.804
+	>=perl-gcpan/DateTime-Format-Epoch-0.13
 	>=dev-perl/List-MoreUtils-0.330.0
-	>=dev-perl/Params-Validate-1.80.0
 	>=dev-perl/IO-Socket-SSL-1.967.0
-	>=dev-perl/DateTime-Locale-0.450.0
-	>=dev-perl/HTTP-Daemon-6.10.0
+	>=dev-perl/Digest-SHA1-2.130.0
 	>=dev-perl/SOAP-Lite-0.715.0
+	>=dev-perl/Sys-Hostname-Long-1.400.0
+	>=perl-gcpan/Crypt-OpenSSL-X509-1.804
+	>=dev-perl/Params-Validate-1.80.0
 	dev-lang/perl"

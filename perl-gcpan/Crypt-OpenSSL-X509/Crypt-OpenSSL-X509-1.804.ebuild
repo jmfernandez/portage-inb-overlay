@@ -10,7 +10,7 @@ MODULE_VERSION="1.804"
 
 inherit perl-module
 
-DESCRIPTION="Interface to OpenSSL's X509 functions."
+DESCRIPTION="Perl extension to OpenSSL's X509 API."
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
