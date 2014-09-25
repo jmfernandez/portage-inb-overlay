@@ -4,19 +4,35 @@
 
 EAPI=5
 
-MODULE_AUTHOR="ETHER"
-MODULE_VERSION="1.002002"
+MODULE_AUTHOR="DRTECH"
+MODULE_VERSION="1.14"
 
 
 inherit perl-module
 
-DESCRIPTION="use L<Cpanel::JSON::XS> with a fallback to L<JSON::XS> and L<JSON::PP>"
+DESCRIPTION="The official client for Elasticsearch"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh sparc sparc-fbsd x86 x86-fbsd   ppc-aix x86-freebsd x64-freebsd sparc64-freebsd hppa-hpux ia64-hpux x86-interix amd64-linux arm-linux ia64-linux ppc64-linux x86-linux ppc-macos x86-macos x64-macos m68k-mint x86-netbsd ppc-openbsd x86-openbsd x64-openbsd sparc-solaris sparc64-solaris x64-solaris x86-solaris x86-winnt x86-cygwin"
 IUSE=""
 
-DEPEND=">=dev-perl/Test-Without-Module-0.170.0
-	>=perl-gcpan/Cpanel-JSON-XS-3.0104
+DEPEND="dev-perl/Moo
+	dev-perl/HTTP-Message
+	dev-perl/URI
+	dev-perl/Sub-Exporter
+	dev-perl/Log-Any
+	dev-perl/namespace-clean
+	dev-perl/Test-Deep
+	dev-perl/Test-Exception
+	perl-gcpan/Log-Any-Adapter-Callback
+	perl-gcpan/Any-URI-Escape
+	>=perl-core/HTTP-Tiny-0.43.0
+	dev-perl/Module-Runtime
+	dev-perl/Try-Tiny
+	perl-gcpan/URI-Escape-XS
+	>=perl-gcpan/JSON-MaybeXS-1.002002
+	perl-gcpan/Log-Any-Adapter
+	dev-perl/IO-Socket-SSL
+	>=perl-gcpan/Hijk-0.17
 	dev-lang/perl"
