@@ -10,7 +10,7 @@ MODULE_VERSION="1.05"
 
 inherit perl-module
 
-DESCRIPTION="error message dispatcher with translation"
+DESCRIPTION="report a problem, with exceptions and translation support"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
@@ -18,6 +18,6 @@ KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh
 IUSE=""
 
 DEPEND=">=perl-gcpan/String-Print-0.15
-	>=dev-perl/Devel-GlobalDestruction-0.120.0
 	>=perl-gcpan/Log-Report-Optional-1.01
+	>=dev-perl/Devel-GlobalDestruction-0.120.0
 	dev-lang/perl"
