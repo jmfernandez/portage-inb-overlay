@@ -20,4 +20,5 @@ IUSE=""
 DEPEND=">=dev-perl/Test-Deep-0.110.0
 	>=dev-perl/Test-Warn-0.240.0
 	>=dev-perl/Test-Exception-0.320.0
+	>=virtual/perl-Module-Build-0.420.0
 	dev-lang/perl"
