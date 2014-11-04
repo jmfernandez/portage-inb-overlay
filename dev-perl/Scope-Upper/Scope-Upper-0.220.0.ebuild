@@ -3,7 +3,7 @@
 # $Header: $
 EAPI=5
 MODULE_AUTHOR=VPIT
-MODULE_VERSION=0.24
+MODULE_VERSION=0.22
 inherit perl-module
 
 DESCRIPTION='Act on upper scopes.'
