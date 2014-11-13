@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-perl/XML-LibXML/XML-LibXML-2.1.400.ebuild,v 1.11 2014/03/16 12:53:19 zlogene Exp $
 
-EAPI=4
+EAPI=5
 
 MODULE_AUTHOR=SHLOMIF
 MODULE_VERSION=2.0116
