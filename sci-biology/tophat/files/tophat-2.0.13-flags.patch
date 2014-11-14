@@ -1,6 +1,15 @@
 diff -Nru tophat-2.0.13/configure.ac tophat-2.0.13-mod/configure.ac
 --- tophat-2.0.13/configure.ac	2014-09-30 01:46:34.000000000 +0200
-+++ tophat-2.0.13-mod/configure.ac	2014-11-14 12:45:42.525029502 +0100
++++ tophat-2.0.13-mod/configure.ac	2014-11-14 16:22:38.162563187 +0100
+@@ -41,7 +41,7 @@
+ 
+ 
+ # BAM related:
+- ac_bam_path=samtools-0.1.18
++ ac_bam_path=src/samtools-0.1.18
+  BAM_LIB="-lbam"
+  BAM_LDFLAGS="-L./$ac_bam_path"
+  BAM_CPPFLAGS="-I./$ac_bam_path"
 @@ -82,7 +82,8 @@
  # set CFLAGS and CXXFLAGS
  #user_CFLAGS="${CXXFLAGS}"

@@ -16,19 +16,19 @@ SRC_URI="http://ccb.jhu.edu/software/${PN}/downloads/${P}.tar.gz"
 LICENSE="Artistic"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug"
+IUSE="debug +system-seqan"
 
 DEPEND="
 	dev-libs/boost
 	sci-biology/samtools
-	sci-biology/seqan"
+	system-seqan? ( <sci-biology/seqan-1.4 )"
 RDEPEND="${DEPEND}
 	sci-biology/bowtie"
 
 PATCHES=( "${FILESDIR}"/${P}-flags.patch )
 
 src_prepare() {
-	rm -rf src/SeqAn* || die
+	use system-seqan && ( rm -rf src/SeqAn* || die )
 	autotools-utils_src_prepare
 }
 
