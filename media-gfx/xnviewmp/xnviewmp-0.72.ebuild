@@ -26,7 +26,7 @@ RDEPEND=">=dev-libs/glib-2
 	dev-qt/qtsvg:4
 	dev-qt/qtwebkit:4
 	dev-qt/qtxmlpatterns:4
-	media-libs/ilmbase:0/6
+	media-libs/ilmbase:6
 "
 DEPEND="$RDEPEND"
 

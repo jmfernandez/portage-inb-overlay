@@ -10,7 +10,7 @@ HOMEPAGE="http://openexr.com/"
 SRC_URI="http://download.savannah.gnu.org/releases/openexr/${P}.tar.gz"
 
 LICENSE="BSD"
-SLOT="0/6"	# 6 From SONAME
+SLOT="6"	# 6 From SONAME
 KEYWORDS="alpha amd64 -arm hppa ia64 ppc ppc64 sparc x86 ~amd64-fbsd ~x86-fbsd"
 IUSE="static-libs"
 
