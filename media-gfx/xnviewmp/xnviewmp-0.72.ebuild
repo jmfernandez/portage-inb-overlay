@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit eutils versionator
 
@@ -26,6 +26,7 @@ RDEPEND=">=dev-libs/glib-2
 	dev-qt/qtsvg:4
 	dev-qt/qtwebkit:4
 	dev-qt/qtxmlpatterns:4
+	media-libs/ilmbase:0/6
 "
 DEPEND="$RDEPEND"
 
