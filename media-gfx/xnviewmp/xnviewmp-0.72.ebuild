@@ -14,7 +14,7 @@ SRC_URI="x86? ( http://download.xnview.com/XnViewMP-linux.tgz -> ${P}-linux.tar.
 SLOT="0"
 LICENSE="free-noncomm as-is"
 KEYWORDS="~x86 ~amd64"
-IUSE=""
+IUSE="openexr"
 
 RDEPEND=">=dev-libs/glib-2
 	x11-libs/libX11
@@ -26,7 +26,7 @@ RDEPEND=">=dev-libs/glib-2
 	dev-qt/qtsvg:4
 	dev-qt/qtwebkit:4
 	dev-qt/qtxmlpatterns:4
-	media-libs/ilmbase:6
+	openexr? ( ~media-libs/ilmbase-1.0.2 )
 "
 DEPEND="$RDEPEND"
 
@@ -38,6 +38,9 @@ src_install() {
 
 	# Install XnView in /opt
 	dodir ${XNVIEW_HOME%/*}
+
+	# As this plugin depends on ilmbase, remove it when the dependency is not available
+	use openexr || rm -f "${S}"/Plugins/IlmImf.so
 	mv "${S}" "${D}"${XNVIEW_HOME} || die "Unable to install XnView folder"
 
 	# Create /opt/bin/xnview
