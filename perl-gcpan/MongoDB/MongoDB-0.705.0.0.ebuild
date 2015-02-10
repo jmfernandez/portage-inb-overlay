@@ -34,5 +34,4 @@ DEPEND="dev-perl/Try-Tiny
 	dev-perl/Throwable
 	>=dev-perl/Test-Deep-0.110.0
 	perl-gcpan/Syntax-Keyword-Junction
-	>=dev-perl/Config-AutoConf-0.305
-	dev-lang/perl"
+	>=dev-perl/Config-AutoConf-0.305"
