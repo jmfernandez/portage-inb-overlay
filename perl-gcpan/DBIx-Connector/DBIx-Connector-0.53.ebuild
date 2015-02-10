@@ -20,5 +20,4 @@ IUSE=""
 DEPEND=">=dev-perl/DBI-1.628.0
 	>=dev-perl/Test-Pod-Coverage-1.100.0
 	>=dev-perl/Test-MockModule-0.50.0
-	>=dev-perl/Test-Pod-1.480.0
-	dev-lang/perl"
+	>=dev-perl/Test-Pod-1.480.0"

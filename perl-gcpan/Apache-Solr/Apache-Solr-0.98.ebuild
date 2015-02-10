@@ -21,5 +21,4 @@ DEPEND="dev-perl/MIME-Types
 	dev-perl/XML-LibXML-Simple
 	perl-gcpan/Log-Report
 	dev-perl/URI
-	dev-perl/HTTP-Message
-	dev-lang/perl"
+	dev-perl/HTTP-Message"
