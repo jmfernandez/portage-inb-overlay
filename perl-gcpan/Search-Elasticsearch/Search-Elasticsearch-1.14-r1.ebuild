@@ -34,5 +34,4 @@ DEPEND="dev-perl/Moo
 	>=perl-gcpan/JSON-MaybeXS-1.002002
 	perl-gcpan/Log-Any-Adapter
 	dev-perl/IO-Socket-SSL
-	>=perl-gcpan/Hijk-0.17
-	dev-lang/perl"
+	>=perl-gcpan/Hijk-0.17"
