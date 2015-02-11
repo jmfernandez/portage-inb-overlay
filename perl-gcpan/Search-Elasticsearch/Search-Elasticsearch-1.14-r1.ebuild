@@ -27,7 +27,7 @@ DEPEND="dev-perl/Moo
 	dev-perl/Test-Exception
 	perl-gcpan/Log-Any-Adapter-Callback
 	perl-gcpan/Any-URI-Escape
-	>=perl-core/HTTP-Tiny-0.43.0
+	>=virtual/perl-HTTP-Tiny-0.43.0
 	dev-perl/Module-Runtime
 	dev-perl/Try-Tiny
 	perl-gcpan/URI-Escape-XS
