@@ -18,6 +18,6 @@ KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh
 IUSE=""
 
 DEPEND=">=dev-perl/DBI-1.628.0
-	>=dev-perl/Test-Pod-Coverage-1.100.0
+	>=dev-perl/Test-Pod-Coverage-1.80.0
 	>=dev-perl/Test-MockModule-0.50.0
 	>=dev-perl/Test-Pod-1.480.0"
