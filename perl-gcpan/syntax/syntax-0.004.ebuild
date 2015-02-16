@@ -18,5 +18,4 @@ KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh
 IUSE=""
 
 DEPEND="dev-perl/namespace-clean
-	>=dev-perl/Data-OptList-0.108.0
-	dev-lang/perl"
+	>=dev-perl/Data-OptList-0.108.0"
