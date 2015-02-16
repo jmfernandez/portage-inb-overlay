@@ -19,10 +19,10 @@ IUSE=""
 
 DEPEND="dev-perl/Try-Tiny
 	dev-perl/Moose
-	perl-gcpan/DateTime-Tiny
+	dev-perl/DateTime-Tiny
 	>=dev-perl/Path-Tiny-0.12.0
 	dev-perl/Tie-IxHash
-	perl-gcpan/Data-Types
+	dev-perl/Data-Types
 	dev-perl/Test-Fatal
 	dev-perl/Test-Warn
 	perl-gcpan/Safe-Isa
@@ -34,4 +34,5 @@ DEPEND="dev-perl/Try-Tiny
 	dev-perl/Throwable
 	>=dev-perl/Test-Deep-0.110.0
 	perl-gcpan/Syntax-Keyword-Junction
-	>=dev-perl/Config-AutoConf-0.305"
+	>=dev-perl/Config-AutoConf-0.305
+	virtual/perl-ExtUtils-MakeMaker"
