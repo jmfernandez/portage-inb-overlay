@@ -20,7 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="app-arch/unzip"
-RDEPEND=">=virtual/jre-1.6"
+RDEPEND=">=virtual/jre-1.7"
 
 RESTRICT="fetch"
 
@@ -33,8 +33,15 @@ pkg_nofetch() {
 }
 
 src_install() {
-	java-pkg_dojar "${PN}.jar"
-	java-pkg_dolauncher "${PN}"
-	make_desktop_entry "${PN}" "yEd Graph Editor"
+	java-pkg_dojar "${PN}.jar" lib/*.jar
+	dodir /usr/share/${PN}/lib/lib/
+	for jar in lib/*.jar ; do
+		dosym ../$(basename ${jar}) /usr/share/${PN}/lib/${jar}
+	done
+
+	java-pkg_dolauncher "${PN}" --jar "${PN}.jar"
+	doicon -s 16 icons/yicon16.png
+	doicon -s 32 icons/yicon32.png
+	make_desktop_entry "${PN}" "yEd Graph Editor" yicon32
 	dodoc "${S}"/license.html
 }
