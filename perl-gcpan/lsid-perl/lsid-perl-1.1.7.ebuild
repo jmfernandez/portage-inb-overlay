@@ -23,4 +23,4 @@ DEPEND=">=dev-perl/URI-1.600.0
 	>=dev-perl/Net-DNS-0.720.0
 	>=perl-gcpan/RDF-Core-0.51
 	>=dev-perl/SOAP-Lite-0.715.0
-	dev-lang/perl"
+	>=dev-perl/Error-0.150.0"
