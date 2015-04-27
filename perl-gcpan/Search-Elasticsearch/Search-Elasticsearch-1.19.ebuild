@@ -20,7 +20,7 @@ IUSE=""
 DEPEND="dev-perl/URI
 	dev-perl/Try-Tiny
 	dev-perl/HTTP-Message
-	dev-perl/Log-Any
+	>=dev-perl/Log-Any-1.02
 	dev-perl/namespace-clean
 	>=dev-perl/Package-Stash-0.340.0
 	perl-gcpan/Any-URI-Escape
