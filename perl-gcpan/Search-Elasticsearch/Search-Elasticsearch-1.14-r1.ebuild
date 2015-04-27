@@ -21,7 +21,7 @@ DEPEND="dev-perl/Moo
 	dev-perl/HTTP-Message
 	dev-perl/URI
 	dev-perl/Sub-Exporter
-	dev-perl/Log-Any
+	>=dev-perl/Log-Any-1.02
 	dev-perl/namespace-clean
 	dev-perl/Test-Deep
 	dev-perl/Test-Exception
@@ -32,6 +32,5 @@ DEPEND="dev-perl/Moo
 	dev-perl/Try-Tiny
 	perl-gcpan/URI-Escape-XS
 	>=perl-gcpan/JSON-MaybeXS-1.002002
-	perl-gcpan/Log-Any-Adapter
 	dev-perl/IO-Socket-SSL
 	>=perl-gcpan/Hijk-0.17"
