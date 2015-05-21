@@ -1,0 +1,12 @@
+diff -Nru ONTO-PERL-1.44/lib/OBO/Parser/OWLParser.pm ONTO-PERL-1.44-mod/lib/OBO/Parser/OWLParser.pm
+--- ONTO-PERL-1.44/lib/OBO/Parser/OWLParser.pm	2014-01-17 10:38:43.000000000 +0100
++++ ONTO-PERL-1.44-mod/lib/OBO/Parser/OWLParser.pm	2015-05-21 21:10:45.526119299 +0200
+@@ -21,6 +21,8 @@
+ 
+ use open qw(:std :utf8); # Make All I/O Default to UTF-8
+ 
++use XML::Parser;
++
+ sub new {
+ 	my $class = shift;
+ 	my $self  = {};
