@@ -23,4 +23,4 @@ RDEPEND="${DEPEND}
 
 SRC_TEST=no
 
-S="${WORKDIR}"/Swissknife_${PV}
+S="${WORKDIR}"/Swissknife_${PV/./_}
