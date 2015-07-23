@@ -30,6 +30,6 @@ src_prepare(){
 	mycmakeargs="
 	  $(cmake-utils_use_enable svg SVG)
 	"
-	vcs-snapshot_src_parpare
-	cmake-utils_src_parpare
+	vcs-snapshot_src_prepare
+	cmake-utils_src_prepare
 }
