@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4
+inherit qt4-r2
 
 RELVER=1004
 DESCRIPTION="A simple interface for working with TeX documents"

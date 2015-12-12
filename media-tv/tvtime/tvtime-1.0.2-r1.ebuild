@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/media-tv/tvtime/tvtime-1.0.2.ebuild,v 1.3 2006/04/20 05:00:49 flameeyes Exp $
 
+EAPI=5
+
 inherit eutils autotools
 
 DESCRIPTION="High quality television application for use with video capture cards"

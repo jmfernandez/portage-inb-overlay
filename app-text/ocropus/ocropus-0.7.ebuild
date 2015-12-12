@@ -5,7 +5,7 @@ EAPI="5"
 PYTHON_COMPAT=( python2_7 )
 
 inherit eutils mercurial python-single-r1
-n
+
 EHG_REPO_URI="https://code.google.com/p/${PN}"
 EHG_REVISION="${P}"
 
