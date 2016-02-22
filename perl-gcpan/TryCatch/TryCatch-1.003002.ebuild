@@ -29,4 +29,4 @@ DEPEND=">=perl-gcpan/Scope-Upper-0.28
 	dev-perl/MooseX-Types
 	>=dev-perl/Sub-Exporter-0.986.0
 	>=dev-perl/B-Hooks-OP-Check-0.190.0
-	dev-perl/extutils-depends"
+	dev-perl/ExtUtils-Depends"
