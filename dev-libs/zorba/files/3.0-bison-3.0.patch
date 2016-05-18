@@ -1,0 +1,50 @@
+diff -Nru zorba-3.0/src/compiler/parser/parser.y zorba-3.0-bison/src/compiler/parser/parser.y
+--- zorba-3.0/src/compiler/parser/parser.y	2013-11-06 08:20:44.000000000 +0100
++++ zorba-3.0-bison/src/compiler/parser/parser.y	2016-05-18 19:15:38.688527804 +0200
+@@ -31,7 +31,8 @@
+ %skeleton "lalr1.cc"  /*  -*- C++ -*- */
+ %require "2.4"
+ %defines
+-%name-prefix="zorba"
++%name-prefix "zorba"
++%define api.pure
+ %pure-parser
+ %error-verbose
+ 
+@@ -45,9 +46,9 @@
+ 
+ 
+ #ifdef XQUERY_PARSER
+-%define "parser_class_name" "xquery_parser"
++%define "parser_class_name" { xquery_parser }
+ #else
+-%define "parser_class_name" "jsoniq_parser"
++%define "parser_class_name" { jsoniq_parser }
+ #endif
+ 
+ 
+@@ -4635,21 +4636,21 @@
+             $$ = NumericLiteral::new_literal(
+                 LOC(@$), ParseConstants::num_decimal, *$1
+             );
+-            delete yylval.decval;
++            delete yylhs.value.decval;
+         }
+     |   INTEGER_LITERAL
+         {
+             $$ = NumericLiteral::new_literal(
+                 LOC(@$), ParseConstants::num_integer, *$1
+             );
+-            delete yylval.ival;
++            delete yylhs.value.ival;
+         }
+     |   DOUBLE_LITERAL
+         {
+             $$ = NumericLiteral::new_literal(
+                 LOC(@$), ParseConstants::num_double, *$1
+             );
+-            delete yylval.dval;
++            delete yylhs.value.dval;
+         }
+     ;
+ 
