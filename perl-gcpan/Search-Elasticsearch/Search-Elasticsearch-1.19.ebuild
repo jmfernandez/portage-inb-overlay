@@ -30,7 +30,7 @@ DEPEND="dev-perl/URI
 	dev-perl/Test-Exception
 	>=virtual/perl-HTTP-Tiny-0.43.0
 	perl-gcpan/URI-Escape-XS
-	>=perl-gcpan/JSON-MaybeXS-1.003003
+	>=dev-perl/JSON-MaybeXS-1.003003
 	>=perl-gcpan/Hijk-0.19
 	dev-perl/Module-Runtime
 	dev-perl/IO-Socket-SSL

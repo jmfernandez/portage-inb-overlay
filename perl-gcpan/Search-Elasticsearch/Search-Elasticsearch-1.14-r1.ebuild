@@ -31,6 +31,6 @@ DEPEND="dev-perl/Moo
 	dev-perl/Module-Runtime
 	dev-perl/Try-Tiny
 	perl-gcpan/URI-Escape-XS
-	>=perl-gcpan/JSON-MaybeXS-1.002002
+	>=dev-perl/JSON-MaybeXS-1.002002
 	dev-perl/IO-Socket-SSL
 	>=perl-gcpan/Hijk-0.17"
