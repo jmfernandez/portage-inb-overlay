@@ -19,7 +19,7 @@ perl_meta_build() {
 	# File::Spec
 	echo virtual/perl-File-Spec
 	# Module::Build 0.2701 ( 0.270.100 )
-	echo \>=virtual/perl-Module-Build-0.27.01
+	echo \>=dev-perl/Module-Build-0.27.01
 	# Test::More 0.17 ( 0.170.0 )
 	echo \>=virtual/perl-Test-Simple-0.17
 }
