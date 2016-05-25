@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 perl_meta_configure() {
 	# Module::Build 0.2701 ( 0.270.100 )
-	echo \>=virtual/perl-Module-Build-0.27.01
+	echo \>=dev-perl/Module-Build-0.27.01
 }
 perl_meta_build() {
 	# File::Spec
