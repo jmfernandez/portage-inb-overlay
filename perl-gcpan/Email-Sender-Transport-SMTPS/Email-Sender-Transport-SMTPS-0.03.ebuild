@@ -20,5 +20,4 @@ IUSE=""
 DEPEND=">=dev-perl/Net-SMTPS-0.30.0
 	>=dev-perl/Module-Build-Tiny-0.37.0
 	dev-perl/Email-Sender
-	dev-perl/MooX-Types-MooseLike
-	dev-lang/perl"
+	dev-perl/MooX-Types-MooseLike"
