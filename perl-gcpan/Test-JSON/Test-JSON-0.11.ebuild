@@ -20,4 +20,4 @@ IUSE=""
 DEPEND=">=dev-perl/Test-Tester-0.108.0
 	>=dev-perl/JSON-Any-1.290.0
 	>=dev-perl/Test-Differences-0.610.0
-	dev-lang/perl"
+	dev-perl/Module-Build"
