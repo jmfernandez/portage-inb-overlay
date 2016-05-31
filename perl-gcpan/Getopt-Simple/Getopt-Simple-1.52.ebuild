@@ -18,4 +18,4 @@ KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh
 IUSE=""
 
 DEPEND="dev-perl/Test-Pod
-	dev-lang/perl"
+	dev-perl/Module-Build"
