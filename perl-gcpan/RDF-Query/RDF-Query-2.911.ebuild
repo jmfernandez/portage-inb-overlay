@@ -25,7 +25,6 @@ DEPEND="dev-perl/Data-UUID
 	dev-perl/Parse-RecDescent
 	dev-perl/DateTime-Format-W3CDTF
 	perl-gcpan/RDF-Trine
-	dev-perl/set-scalar
+	dev-perl/Set-Scalar
 	perl-gcpan/Test-JSON
-	dev-perl/Test-Exception
-	dev-lang/perl"
+	dev-perl/Test-Exception"

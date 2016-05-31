@@ -33,7 +33,7 @@ DEPEND="dev-perl/Text-CSV
 	dev-perl/HTTP-Negotiate
 	>=dev-perl/Moose-2.60.400
 	perl-gcpan/DBIx-Connector
-	dev-perl/set-scalar
+	dev-perl/Set-Scalar
 	dev-perl/DBI
 	perl-gcpan/Test-JSON
 	dev-perl/Test-Exception
