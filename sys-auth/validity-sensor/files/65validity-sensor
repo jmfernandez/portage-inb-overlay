@@ -1,0 +1,26 @@
+#!/bin/sh
+
+. "${PM_FUNCTIONS}"
+
+suspend_FPS() {
+    # Signal the vcsFPService about the suspend/hiberante
+	echo " Sending Suspend Event"
+	pkill -SIGUSR1 vcsFPService
+}
+
+resume_FPS() {
+	# Signal the vcsFPService about the resume
+	pkill -SIGUSR2 vcsFPService
+}
+
+case "$1" in
+	thaw|resume)
+		resume_FPS
+		;;
+	hibernate|suspend)
+		suspend_FPS
+		;;
+	*)
+		exit $NA
+		;;
+esac
