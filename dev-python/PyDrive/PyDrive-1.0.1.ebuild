@@ -19,4 +19,5 @@ IUSE=""
 RDEPEND="
 	>=dev-python/pyyaml-3.0[${PYTHON_USEDEP}]
 	>=dev-python/google-api-python-client-1.2[${PYTHON_USEDEP}]
+	<dev-python/google-api-python-client-1.5.0[${PYTHON_USEDEP}]
 "
