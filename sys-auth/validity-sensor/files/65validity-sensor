@@ -4,13 +4,17 @@
 
 suspend_FPS() {
     # Signal the vcsFPService about the suspend/hiberante
-	echo " Sending Suspend Event"
-	pkill -SIGUSR1 vcsFPService
+	if pgrep vcsFPService > /dev/null ; then
+		echo " Sending Suspend Event"
+		pkill -SIGUSR1 vcsFPService
+	fi
 }
 
 resume_FPS() {
 	# Signal the vcsFPService about the resume
-	pkill -SIGUSR2 vcsFPService
+	if pgrep vcsFPService > /dev/null ; then
+		pkill -SIGUSR2 vcsFPService
+	fi
 }
 
 case "$1" in

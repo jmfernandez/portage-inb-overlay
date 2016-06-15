@@ -1,6 +1,4 @@
 #!/sbin/openrc-run
-# Copyright 1999-2004 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 depend() {
@@ -9,5 +7,4 @@ depend() {
 name="Validity Fingerprint Service Daemon"
 command=/usr/bin/vcsFPService
 command_args=""
-command_background="true"
-pidfile=${pidfile:-/run/${SVCNAME}.pid}
+command_background="false"
