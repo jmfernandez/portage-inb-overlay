@@ -1,11 +1,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit flag-o-matic
+EAPI="5"
+inherit flag-o-matic git-r3
 
 DESCRIPTION="X daemon that performs an action every time the bell is rung"
-HOMEPAGE="http://http://code.google.com/p/xbelld/"
-SRC_URI="http://xbelld.googlecode.com/files/${P}.tbz2"
+HOMEPAGE="https://gitlab.com/gi1242/xbelld"
+
+EGIT_REPO_URI="${HOMEPAGE}.git"
+EGIT_COMMIT="89b8be4da607f03d21689011ed27b32aff3603a3"
+#SRC_URI="http://xbelld.googlecode.com/files/${P}.tbz2"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -28,5 +32,5 @@ src_compile() {
 src_install() {
 	dobin xbelld
 	doman xbelld.1
-	dodoc README ChangeLog
+	dodoc README
 }
