@@ -23,7 +23,7 @@ DEPEND=">=dev-perl/IO-stringy-2.110.0
 	>=dev-perl/IPC-Shareable-0.610.0
 	dev-perl/Want
 	>=dev-perl/Unicode-String-2.90.0
-	>=dev-perl/IO-Prompt-0.997002
+	>=dev-perl/IO-Prompt-0.997.2
 	>=dev-perl/DBD-mysql-4.20.0
 	perl-gcpan/XML-SemanticCompare
 	dev-perl/Template-Toolkit
