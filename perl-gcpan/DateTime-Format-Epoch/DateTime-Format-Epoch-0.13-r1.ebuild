@@ -19,4 +19,5 @@ IUSE=""
 
 DEPEND="dev-perl/Params-Validate
 	>=dev-perl/DateTime-1.030.0
+	dev-perl/Module-Build
 	dev-lang/perl"
