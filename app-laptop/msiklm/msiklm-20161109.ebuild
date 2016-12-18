@@ -28,6 +28,6 @@ src_compile() {
 }
 
 src_install() {
-	doexe "${PN}"
+	dobin "${PN}"
 	dodoc README.md LICENSE
 }
