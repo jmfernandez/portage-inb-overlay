@@ -260,16 +260,16 @@ mkl_add_profile() {
 		EOF
 	done
 	cat >> blas-${prof}.pc <<-EOF || die
-		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core ${4} -lpthread
+		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core ${4} -lm -lpthread
 	EOF
 	cat >> cblas-${prof}.pc <<-EOF || die
 		Requires: blas
-		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core ${4} -lpthread
+		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core ${4} -lm -lpthread
 		Cflags: -I\${includedir}
 	EOF
 	cat >> lapack-${prof}.pc <<-EOF || die
 		Requires: blas
-		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core -lmkl_lapack ${4} -lpthread
+		Libs: -Wl,--no-as-needed -L\${libdir} ${2} ${3} -lmkl_core -lmkl_lapack ${4} -lm -lpthread
 	EOF
 	insinto ${MKL_LIBDIR}
 	for x in blas cblas lapack; do
