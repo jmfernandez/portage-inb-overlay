@@ -4,9 +4,9 @@
 
 EAPI=5
 
-PYTHON_DEPEND="python? 2"
+PYTHON_COMPAT=( python2_7 )
 
-inherit cmake-utils java-pkg-opt-2 versionator python
+inherit cmake-utils java-pkg-opt-2 versionator python-r1
 
 DESCRIPTION="Zorba NoSQL query processor (JSON, XML, etc.)"
 HOMEPAGE="http://www.zorba.io"
@@ -40,6 +40,8 @@ IUSE="debug csharp +curl doc examples java php python ruby +ssl static-libs +thr
 #   Enable with ZORBA_XQUERYX=ON
 # * Flex and Bison not needed to install, just when developing Zorba
 # * further dependencies under "Non-core Module Requirements"
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+
 RDEPEND=">=dev-libs/libxml2-2.2.16
 	sys-apps/util-linux
 	dev-libs/boost
@@ -61,7 +63,7 @@ DEPEND="${RDEPEND}
 	xqj? ( dev-lang/swig >=virtual/jdk-1.6 )
 	csharp? ( dev-lang/swig )
 	php? ( dev-lang/swig )
-	python? ( dev-lang/swig )
+	python? ( dev-lang/swig ${PYTHON_DEPS} )
 	ruby? ( dev-lang/swig )
 	"
 
