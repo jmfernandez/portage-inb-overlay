@@ -5,7 +5,7 @@
 EAPI=5
 
 MODULE_AUTHOR="DANIEL"
-MODULE_VERSION="1.804"
+MODULE_VERSION="1.807"
 
 
 inherit perl-module
