@@ -27,7 +27,7 @@ RDEPEND="
 		dev-python/argparse[${PYTHON_USEDEP}]
 		dev-python/sh[${PYTHON_USEDEP}]
 		dev-python/tinydav[${PYTHON_USEDEP}]
-		dev-python/PyDrive[${PYTHON_USEDEP}]
+		>=dev-python/PyDrive-1.3.1[${PYTHON_USEDEP}]
 		dev-python/profilehooks[${PYTHON_USEDEP}]
 		dev-python/psutil[${PYTHON_USEDEP}]
 	"
