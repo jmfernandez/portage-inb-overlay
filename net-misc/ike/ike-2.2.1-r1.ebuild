@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=6
 
 CMAKE_IN_SOURCE_BUILD="1"
 inherit cmake-utils linux-info versionator
@@ -37,9 +37,10 @@ CONFIG_CHECK="INET_XFRM_MODE_TRANSPORT INET_XFRM_MODE_TUNNEL"
 S="${WORKDIR}/${PN}"
 
 src_configure(){
-	mycmakeargs+=( $(cmake-utils_use ldap LDAP)
-		$(cmake-utils_use nat NATT)
-		$(cmake-utils_use qt4 QTGUI)
+	mycmakeargs+=( 
+		"-DLDAP=$(usex ldap)"
+		"-DNATT=$(usex nat)"
+		"-DQTGUI=$(usex qt4)"
 		"-DMANDIR=/usr/share/man")
 
 	cmake-utils_src_configure
