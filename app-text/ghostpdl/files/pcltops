@@ -1,0 +1,3 @@
+#!/bin/bash
+set -x
+gpcl6 -sDEVICE=pswrite -sOutputFile=- -dNOPAUSE "$6"
