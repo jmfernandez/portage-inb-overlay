@@ -2,38 +2,45 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-text/ghostpcl.ebuild Exp $
 
+EAPI=6
+
 inherit eutils
 
 DESCRIPTION="AFPL GhostPCL"
 HOMEPAGE="http://www.artifex.com/downloads/"
 
-SRC_URI="http://downloads.ghostscript.com/public/${P}.tar.gz"
+MY_PV=gs921
+SRC_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/${MY_PV}/${P}.tar.xz"
+#SRC_URI="http://downloads.ghostscript.com/public/${P}.tar.gz"
 
 LICENSE="Aladdin"
 SLOT="0"
 KEYWORDS="x86 amd64"
-IUSE="cups X xps svg"
+IUSE="cups X gtk2"
 
 RDEPEND="!X? ( x11-libs/libX11 x11-libs/libXt x11-libs/libXext )"
 
-S=${WORKDIR}/${P}
-
-src_compile() {
+src_prepare() {
 	cd ${S}
 	einfo "Patching default fonts dir to /usr/share/fonts/pclfonts"
 	epatch ${FILESDIR}/fontsdir-${PV}.patch
-	econf || die
-	emake all || die
+	default
+}
+
+src_configure() {
+	econf \
+		$(use_enable cups) \
+		$(use_with cups pdftoraster) \
+		$(use_enable gtk2 gtk)
 }
 
 src_install() {
 	exeinto "/usr/bin"
-	doexe ${S}/main/obj/pcl6 ${S}/tools/pcl2pdf ${S}/tools/pcl2pdfwr 
-	use svg && doexe ${S}/svg/obj/gsvg
-	use xps && doexe ${S}/xps/obj/gxps
+	doexe ${S}/bin/gpcl6 ${S}/pcl/tools/pcl2pdf ${S}/pcl/tools/pcl2pdfwr 
+	doexe ${S}/bin/gxps
 	insinto "/usr/share/fonts/pclfonts"
-	doins ${S}/urwfonts/*.ttf
-	dodoc ${S}/doc/ghostpdl.* #${S}/NEWS ${S}/README
+	doins ${S}/pcl/urwfonts/*.ttf
+	dodoc ${S}/doc/pclxps/ghostpdl.* #${S}/NEWS ${S}/README
 	if use cups ; then
 		exeinto "/usr/libexec/cups/filter"
 		doexe ${FILESDIR}/pcltops

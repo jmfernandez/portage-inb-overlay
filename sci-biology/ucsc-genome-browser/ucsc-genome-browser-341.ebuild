@@ -8,7 +8,7 @@ inherit toolchain-funcs flag-o-matic webapp
 
 DESCRIPTION="The UCSC genome browser suite, also known as Jim Kent's library and GoldenPath"
 HOMEPAGE="http://genome.ucsc.edu/"
-SRC_URI="http://hgdownload.cse.ucsc.edu/admin/jksrc.v${PV}.zip"
+SRC_URI="http://hgdownload.cse.ucsc.edu/admin/jksrc.archive/jksrc.v${PV}.zip"
 
 LICENSE="blat"
 SLOT="0"
