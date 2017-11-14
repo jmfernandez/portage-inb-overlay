@@ -92,7 +92,7 @@ src_install() {
 	doicon usr/share/pixmaps/${PN}.png
 
 	local res
-	for res in 16 32 256 512 1024; do
+	for res in 16 32 256 512 ; do
 		newicon -s ${res} usr/share/icons/hicolor/${res}x${res}/apps/${PN}.png ${PN}.png
 	done
 
