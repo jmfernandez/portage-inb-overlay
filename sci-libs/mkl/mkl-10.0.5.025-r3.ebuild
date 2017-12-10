@@ -135,9 +135,7 @@ src_unpack () {
 }
 
 src_prepare() {
-	einfo "JAJA $S"
 	default
-	einfo "JAJA $S"
 
 	# remove left over
 	rm -f /opt/intel/.*mkl*.log /opt/intel/intel_sdp_products.db || die
