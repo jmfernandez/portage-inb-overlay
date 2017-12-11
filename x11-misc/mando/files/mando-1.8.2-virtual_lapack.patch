@@ -1,0 +1,45 @@
+diff -Nru a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2011-11-28 09:24:30.000000000 +0100
++++ b/CMakeLists.txt	2017-12-11 01:18:52.043486151 +0100
+@@ -7,6 +7,9 @@
+ set(QT_USE_QTOPENGL TRUE)
+ include( ${QT_USE_FILE} )
+ 
++# Added to find lapack properly
++find_package(PkgConfig REQUIRED)
++
+ MESSAGE(STATUS "Looking for libfftw3")
+ find_library(FFTW3_LIBRARY fftw3)
+ if (FFTW3_LIBRARY)
+@@ -56,12 +59,15 @@
+ endif (X11_LIBRARY)
+ 
+ MESSAGE(STATUS "Looking for liblapack")
+-find_library(LAPACK_LIBRARY lapack)
+-if (LAPACK_LIBRARY)
++pkg_search_module(LAPACK REQUIRED lapack)
++if (LAPACK_FOUND)
+     MESSAGE(STATUS "Looking for liblapack - found")
+-else (LAPACK_LIBRARY)
++else (LAPACK_FOUND)
+     MESSAGE(FATAL_ERROR "Looking for liblapack - not found.")
+-endif (LAPACK_LIBRARY)
++endif (LAPACK_FOUND)
++include_directories(${LAPACK_INCLUDE_DIRS})
++link_directories(${LAPACK_LIBRARY_DIRS})
++add_compile_options(${LAPACK_CFLAGS_OTHER})
+ 
+ MESSAGE(STATUS "Looking for Xtst")
+ find_library(XTST_LIBRARY Xtst)
+diff -Nru a/src/CMakeLists.txt b/src/CMakeLists.txt
+--- a/src/CMakeLists.txt	2011-11-28 09:24:30.000000000 +0100
++++ b/src/CMakeLists.txt	2017-12-11 01:16:44.005493233 +0100
+@@ -97,7 +97,7 @@
+                  ${M_LIBRARY}
+                  ${GL_LIBRARY}
+                  ${X11_LIBRARY}
+-                 ${LAPACK_LIBRARY}
++		 ${LAPACK_LIBRARIES}
+                  ${XTST_LIBRARY}
+               )
+ 

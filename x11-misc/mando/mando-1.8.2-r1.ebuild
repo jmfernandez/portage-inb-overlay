@@ -29,11 +29,15 @@ DEPEND="dev-qt/qtgui:4
 		virtual/lapack
 		${RDEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${P}-v4l1-compat.patch"
+	"${FILESDIR}/${P}-virtual_lapack.patch"
+)
+
 src_unpack() {
 	mkdir "${S}"
 	cd "${S}"
 	unpack "$A"
-	epatch "${FILESDIR}/${P}-v4l1-compat.patch"
 }
 
 src_install() {
