@@ -1,6 +1,5 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -68,6 +67,7 @@ get_openblas_abi_cflags() {
 	fi
 	$(numeric-int64_is_int64_build) && \
 		openblas_abi_cflags+=( -DOPENBLAS_USE64BITINT )
+	use openmp && openblas_abi_cflags+=( -fopenmp )
 	echo "${openblas_abi_cflags[@]}"
 }
 
@@ -109,12 +109,12 @@ src_compile() {
 		# cflags already defined twice
 		unset CFLAGS || die
 		emake clean && emake libs shared ${openblas_flags}
-		mkdir -p libs && mv libopenblas* libs/ || die
+		mkdir -p libs && mv libopenblas* libs/ || die
 		# avoid pic when compiling static libraries, so re-compiling
 		if use static-libs; then
 			emake clean
 			emake libs ${openblas_flags} NO_SHARED=1 NEED_PIC=
-			mv libopenblas* libs/ || die
+			mv libopenblas* libs/ || die
 		fi
 		# Fix Bug 524612 - [science overlay] sci-libs/openblas-0.2.11 - Assembler messages:
 		# ../kernel/x86_64/gemm_kernel_8x4_barcelona.S:451: Error: missing ')'
@@ -175,7 +175,7 @@ src_install() {
 			${profname}
 
 		if [[ ${CHOST} == *-darwin* ]] ; then
-			cd "${ED}"/usr/$(get_libdir) || die
+			cd "${ED}"/usr/$(get_libdir) || die
 			local d
 			for d in *.dylib; do
 				ebegin "Correcting install_name of ${d}"
@@ -190,7 +190,7 @@ src_install() {
 	}
 	numeric-int64-multibuild_foreach_all_abi_variants run_in_build_dir my_src_install
 
-	printf "/usr/include/cblas.h ${PN}/cblas.h" > "${T}"/alternative-cblas-generic.sh || die
+	printf "/usr/include/cblas.h ${PN}/cblas.h" > "${T}"/alternative-cblas-generic.sh || die
 	numeric-int64-multibuild_install_alternative blas ${NUMERIC_MODULE_NAME}
 	numeric-int64-multibuild_install_alternative cblas ${NUMERIC_MODULE_NAME}
 
