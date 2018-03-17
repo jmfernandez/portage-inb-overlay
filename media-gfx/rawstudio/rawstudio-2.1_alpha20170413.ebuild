@@ -3,15 +3,19 @@
 # $Header: /var/cvsroot/gentoo-x86/media-gfx/rawstudio/Attic/rawstudio-2.0-r1.ebuild,v 1.6 2015/02/03 14:31:25 pacho dead $
 
 EAPI=5
-inherit autotools eutils
+inherit autotools git-r3 eutils versionator
 
 DESCRIPTION="A program for reading and manipulating raw images from digital cameras"
-HOMEPAGE="http://rawstudio.org/"
-SRC_URI="http://${PN}.org/files/release/${P}.tar.gz"
+HOMEPAGE="https://github.com/rawstudio/rawstudio"
+SRC_URI=""
+CHECKOUT_DATE=$(get_version_component_range 3)
+EGIT_REPO_URI="${HOMEPAGE}.git"
+#EGIT_COMMIT="master@{$(date -u --rfc-3339=seconds -d ${CHECKOUT_DATE#alpha})}"
+EGIT_COMMIT="003dd4f33377dcfd15ae32904a7cbb0e92123607"
 
 LICENSE="GPL-2 CC-BY-SA-3.0"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="dev-db/sqlite:3
@@ -19,7 +23,7 @@ RDEPEND="dev-db/sqlite:3
 	>=dev-libs/openssl-1:0=
 	>=gnome-base/gconf-2
 	media-libs/flickcurl
-	media-libs/lcms:0
+	media-libs/lcms:2
 	media-libs/lensfun
 	media-libs/libgphoto2:=
 	media-libs/libpng:0=
@@ -36,18 +40,20 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig"
 
-DOCS=( AUTHORS NEWS README TODO )
+DOCS=( AUTHORS NEWS README.md )
 
 src_prepare() {
-	sed -i \
-		-e '/^AM_PROG_CC_STDC/d' \
-		-e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:' \
-		configure.in || die
+	#sed -i \
+	#	-e '/^AM_PROG_CC_STDC/d' \
+	#	-e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:' \
+	#	configure.in || die
 	find . -name Makefile.am -exec sed -i -e 's:-O4:-Wall:' {} +
 	sed -i -e 's:-O3:-Wall:' plugins/load-rawspeed/Makefile.am
+	#epatch \
+	#	"${FILESDIR}"/${P}-libpng15.patch \
+	#	"${FILESDIR}"/${P}-g_thread_init.patch \
+	#	"${FILESDIR}"/${P}-icon.patch
 	epatch \
-		"${FILESDIR}"/${P}-libpng15.patch \
-		"${FILESDIR}"/${P}-g_thread_init.patch \
 		"${FILESDIR}"/${P}-icon.patch
 	eautoreconf
 }
