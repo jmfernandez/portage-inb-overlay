@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -9,16 +9,19 @@ inherit pax-utils rpm multilib-build xdg-utils gnome2-utils
 
 DESCRIPTION="P2P Internet Telephony (VoiceIP) client"
 HOMEPAGE="https://www.skype.com/"
-SRC_URI="https://repo.skype.com/rpm/unstable/${PN}_${PV}-1.x86_64.rpm"
+SRC_URI="https://repo.skype.com/rpm/stable/${PN}_${PV}-1.x86_64.rpm"
 
-LICENSE="Skype-TOS no-source-code"
+LICENSE="Skype-TOS MIT MIT-with-advertising BSD-1 BSD-2 BSD Apache-2.0 Boost-1.0 ISC CC-BY-SA-3.0 CC0-1.0 openssl ZLIB APSL-2 icu Artistic-2 LGPL-2.1 no-source-code"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 -*"
 IUSE="pax_kernel"
 
 S="${WORKDIR}"
 QA_PREBUILT=opt/${PN}/${PN}
 RESTRICT="mirror bindist strip" #299368
+
+# Dependency checker
+# find /opt/skypeforlinux/ -type f | while read -r f; do file $f | grep -i elf &>/dev/null && readelf -a $f | grep NEEDED; done | cut -d '[' -f 2 | sort -u | cut -d ']' -f 1 | grep -vE 'libgcc_s\.so\.1|libstdc\+\+\.so\.6' | while read l; do [ -f "/opt/skypeforlinux/$l" ] && continue;  [ -f "/lib/$l" ] && fl="/lib/$l" || fl="/usr/lib64/$l"; p=$(qfile $fl); [ -n "$p" ] && echo $l $p || echo "NOT FOUND $l" >&2; done | cut -d ' ' -f 2 | sort -u
 
 RDEPEND="
 	app-crypt/libsecret[${MULTILIB_USEDEP}]
