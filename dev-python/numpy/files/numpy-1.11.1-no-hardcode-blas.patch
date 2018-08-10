@@ -1,11 +1,6 @@
- numpy/distutils/system_info.py | 29 +++++------------------------
- 1 file changed, 5 insertions(+), 24 deletions(-)
-
-diff --git a/numpy/distutils/system_info.py b/numpy/distutils/system_info.py
-index d7eb49e..aa62b09 100644
---- a/numpy/distutils/system_info.py
-+++ b/numpy/distutils/system_info.py
-@@ -306,26 +306,7 @@ def get_info(name, notfound_action=0):
+--- numpy-1.11.1/numpy/distutils/system_info.py
++++ numpy-1.11.1/numpy/distutils/system_info.py
+@@ -312,26 +312,7 @@
        1 - display warning message
        2 - raise error
      """
@@ -33,7 +28,19 @@ index d7eb49e..aa62b09 100644
            'fft_opt': fft_opt_info,
            'fftw': fftw_info,
            'fftw2': fftw2_info,
-@@ -1690,7 +1671,7 @@ class blas_info(system_info):
+@@ -669,10 +650,7 @@
+         return [b for b in [a.strip() for a in libs.split(',')] if b]
+ 
+     def get_libraries(self, key='libraries'):
+-        if hasattr(self, '_lib_names'):
+-            return self.get_libs(key, default=self._lib_names)
+-        else:
+-            return self.get_libs(key, '')
++        return self.get_libs(key, '')
+ 
+     def library_extensions(self):
+         static_exts = ['.a']
+@@ -1685,7 +1663,7 @@
              lib = self.has_cblas(info)
              if lib is not None:
                  info['language'] = 'c'
@@ -42,7 +49,7 @@ index d7eb49e..aa62b09 100644
                  info['define_macros'] = [('HAVE_CBLAS', None)]
          self.set_info(**info)
  
-@@ -1722,16 +1703,16 @@ class blas_info(system_info):
+@@ -1718,16 +1696,16 @@
                  # check for cblas lib, and if not present check for blas lib.
                  try:
                      c.link_executable(obj, os.path.join(tmpdir, "a.out"),

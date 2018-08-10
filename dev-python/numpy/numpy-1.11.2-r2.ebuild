@@ -1,16 +1,17 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Id$
 
-EAPI=5
+EAPI=6
 
 PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
 PYTHON_REQ_USE="threads(+)"
 
 FORTRAN_NEEDED=lapack
 
-inherit distutils-r1 eutils flag-o-matic fortran-2 multilib multiprocessing toolchain-funcs versionator
+inherit distutils-r1 flag-o-matic fortran-2 multiprocessing toolchain-funcs versionator
 
-DOC_PV="1.10.1"
+DOC_PV="1.11.0"
 DOC_P="${PN}-${DOC_PV}"
 
 DESCRIPTION="Fast array and numerical python library"
@@ -21,25 +22,25 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz
 		http://docs.scipy.org/doc/${DOC_P}/${PN}-ref-${DOC_PV}.pdf
 		http://docs.scipy.org/doc/${DOC_P}/${PN}-user-${DOC_PV}.pdf
 	)"
-# It appears the docs haven't been upgraded, still @ 1.8.1
+# It appears the docs haven't been upgraded, still @ 1.11.0
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="alpha amd64 ~arm ~arm64 hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~arm-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
 IUSE="doc lapack test"
 
-RDEPEND="
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	lapack? ( virtual/cblas virtual/lapack )"
+RDEPEND="lapack? ( virtual/cblas virtual/lapack )"
 DEPEND="${RDEPEND}
+	dev-python/setuptools[${PYTHON_USEDEP}]
 	doc? ( app-arch/unzip )
 	lapack? ( virtual/pkgconfig )
 	test? ( >=dev-python/nose-1.0[${PYTHON_USEDEP}] )"
 
-# Uses distutils.command.config.
-DISTUTILS_IN_SOURCE_BUILD=1
-
 PATCHES=(
-	"${FILESDIR}"/${PN}-1.10.2-no-hardcode-blas.patch
+	"${FILESDIR}"/${PN}-1.11.1-no-hardcode-blas.patch
+
+	# This has been fixed upstream but no new release yet
+	# https://github.com/numpy/numpy/commit/5d0ce36e5be134bb5ead03cab1edeaa60fa355aa
+	"${FILESDIR}"/${P}-import-module-fix.patch
 )
 
 src_unpack() {
@@ -61,7 +62,7 @@ pc_libdir() {
 
 pc_libs() {
 	$(tc-getPKG_CONFIG) --libs-only-l $@ | \
-		sed -e 's/[ ]-l*\(pthread\)\([ ]\|$\)//g' \
+		sed -e 's/[ ]-l*\(pthread\|m\)\([ ]\|$\)//g' \
 		-e 's/^-l//' -e 's/[ ]*-l/,/g' -e 's/[ ]*$//' \
 		| tr ',' '\n' | sort -u | tr '\n' ',' | sed -e 's|,$||'
 }
@@ -70,14 +71,14 @@ python_prepare_all() {
 	if use lapack; then
 		append-ldflags "$($(tc-getPKG_CONFIG) --libs-only-other cblas lapack)"
 		local libdir="${EPREFIX}"/usr/$(get_libdir)
-		cat >> site.cfg <<-EOF
+		cat >> site.cfg <<-EOF || die
 			[blas]
 			include_dirs = $(pc_incdir cblas)
 			library_dirs = $(pc_libdir cblas blas):${libdir}
-			blas_libs = $(pc_libs cblas blas)
+			blas_libs = $(pc_libs cblas blas),m
 			[lapack]
 			library_dirs = $(pc_libdir lapack):${libdir}
-			lapack_libs = $(pc_libs lapack)
+			lapack_libs = $(pc_libs lapack),m
 		EOF
 	else
 		export {ATLAS,PTATLAS,BLAS,LAPACK,MKL}=None
@@ -112,8 +113,21 @@ python_prepare_all() {
 		-e 's:test_f2py:_&:g' \
 		-i numpy/tests/test_scripts.py || die
 
+	# QA bug 590464
+	# The .py files from numpy/core/tests are just added, instead
+	# of being bytecode compiled as a proper subdir package.
+	# We trick the buildsystem into accepting it as a bytecode
+	# package by adding a setup.py and an empty __init__.py
+	#cp numpy/{compat/setup.py,core/tests} || die
+	#touch numpy/core/tests/__init__.py || die
+	#sed \
+	#	-e 's:compat:tests:' \
+	#	-i numpy/core/tests/setup.py || die
+	#sed \
+	#	-e "s:config\.add_data_dir('tests'):config\.add_subpackage('tests'):" \
+	#	-i numpy/core/setup.py || die
+
 	distutils-r1_python_prepare_all
-	epatch_user
 }
 
 python_compile() {
@@ -123,9 +137,10 @@ python_compile() {
 }
 
 python_test() {
-	distutils_install_for_testing ${NUMPY_FCONFIG}
+	distutils_install_for_testing --single-version-externally-managed --record "${TMPDIR}/record.txt" ${NUMPY_FCONFIG}
 
 	cd "${TMPDIR}" || die
+
 	${EPYTHON} -c "
 import numpy, sys
 r = numpy.test(label='full', verbose=3)
@@ -137,7 +152,7 @@ python_install() {
 }
 
 python_install_all() {
-	DOCS+=( COMPATIBILITY DEV_README.txt THANKS.txt )
+	DOCS+=( THANKS.txt )
 
 	if use doc; then
 		HTML_DOCS=( "${WORKDIR}"/html/. )
