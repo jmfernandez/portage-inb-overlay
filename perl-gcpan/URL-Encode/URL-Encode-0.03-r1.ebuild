@@ -19,5 +19,5 @@ IUSE=""
 
 DEPEND="
 	dev-lang/perl
-	dev-lang/Module-Install
+	dev-perl/Module-Install
 "
