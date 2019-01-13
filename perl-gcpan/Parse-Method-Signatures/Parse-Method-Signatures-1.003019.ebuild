@@ -4,20 +4,28 @@
 
 EAPI=5
 
-MODULE_AUTHOR="SWEETKID"
-MODULE_VERSION="0.12"
+MODULE_AUTHOR="KENTNL"
+MODULE_VERSION="1.003019"
 
 
 inherit perl-module
 
-DESCRIPTION="Plack::Middleware which sets body for redirect response, if it's not already set"
+DESCRIPTION="Perl6 like method signature parser"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh sparc x86 x86-fbsd   ppc-aix amd64-linux arm-linux arm64-linux ppc64-linux x86-linux ppc-macos x86-macos x64-macos m68k-mint sparc-solaris sparc64-solaris x64-solaris x86-solaris x86-winnt x64-cygwin x86-cygwin"
 IUSE=""
 
-DEPEND="dev-perl/Plack
-	dev-perl/HTTP-Message
-	dev-perl/HTML-Parser
+DEPEND="dev-perl/Test-Differences
+	>=dev-perl/PPI-1.236.0
+	perl-gcpan/MooseX-Types-Structured
+	>=dev-perl/namespace-clean-0.270.0
+	>=dev-perl/Class-Load-0.230.0
+	dev-perl/Moose
+	>=dev-perl/MooseX-Types-0.360.0
+	>=dev-perl/List-MoreUtils-0.418.0
+	dev-perl/Test-Exception
+	dev-perl/aliased
+	>=perl-gcpan/MooseX-Traits-0.13
 	dev-lang/perl"
