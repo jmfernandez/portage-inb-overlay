@@ -5,12 +5,12 @@
 EAPI=5
 
 MODULE_AUTHOR="SWEETKID"
-MODULE_VERSION="0.12"
+MODULE_VERSION="0.07"
 
 
 inherit perl-module
 
-DESCRIPTION="Plack::Middleware which sets body for redirect response, if it's not already set"
+DESCRIPTION="Plack::Middleware which sets removes body for HTTP response if it's not required"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
@@ -19,5 +19,4 @@ IUSE=""
 
 DEPEND="dev-perl/Plack
 	dev-perl/HTTP-Message
-	dev-perl/HTML-Parser
 	dev-lang/perl"

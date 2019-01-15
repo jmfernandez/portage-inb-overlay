@@ -4,30 +4,27 @@
 
 EAPI=5
 
-MODULE_AUTHOR="ASH"
-MODULE_VERSION="1.003002"
+MODULE_AUTHOR="ETHER"
+MODULE_VERSION="0.36"
 
 
 inherit perl-module
 
-DESCRIPTION="first class try catch semantics for Perl, without source filters."
+DESCRIPTION="Structured Type Constraints for Moose"
 
 LICENSE="|| ( Artistic GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="alpha amd64 amd64-fbsd arm arm64 hppa ia64 m68k mips ppc ppc64 s390 sh sparc x86 x86-fbsd   ppc-aix amd64-linux arm-linux arm64-linux ppc64-linux x86-linux ppc-macos x86-macos x64-macos m68k-mint sparc-solaris sparc64-solaris x64-solaris x86-solaris x86-winnt x64-cygwin x86-cygwin"
 IUSE=""
 
-DEPEND=">=dev-perl/namespace-clean-0.270.0
-	dev-perl/MooseX-Types
-	>=perl-gcpan/Parse-Method-Signatures-1.003019
-	>=dev-perl/ExtUtils-Depends-0.404.0
-	dev-perl/Devel-Declare
-	dev-perl/Test-Exception
-	>=dev-perl/B-Hooks-EndOfScope-0.240.0
-	>=dev-perl/B-Hooks-OP-Check-0.220.0
-	>=dev-perl/Variable-Magic-0.620.0
-	>=dev-perl/Sub-Exporter-0.987.0
+DEPEND=">=dev-perl/Sub-Exporter-0.987.0
 	dev-perl/Moose
-	>=perl-gcpan/B-Hooks-OP-PPAddr-0.06
-	>=dev-perl/Scope-Upper-0.290.0
+	dev-perl/DateTime
+	>=perl-gcpan/Devel-PartialDump-0.20
+	>=dev-perl/namespace-clean-0.270.0
+	dev-perl/Test-Needs
+	dev-perl/Test-Fatal
+	dev-perl/MooseX-Types
+	dev-perl/Module-Build
+	>=dev-perl/Module-Build-Tiny-0.39.0
 	dev-lang/perl"
