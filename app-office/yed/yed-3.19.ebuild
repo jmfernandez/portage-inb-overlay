@@ -11,6 +11,7 @@ HOMEPAGE="http://www.yworks.com/en/products_yed_about.html"
 MY_PN="yEd"
 MY_P="${MY_PN}-${PV}"
 SRC_URI="${MY_P}.zip"
+# http://www.yworks.com/resources/yed/demo/yEd-3.17.1.zip
 DOWNLOAD_URL="http://www.yworks.com/en/products_download.php?file=${SRC_URI}"
 MY_JAR="${P}.jar"
 LICENSE="yEd-1.1"
