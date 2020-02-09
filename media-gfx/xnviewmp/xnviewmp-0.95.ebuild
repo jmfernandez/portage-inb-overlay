@@ -16,7 +16,7 @@ SRC_URI="https://download.xnview.com/old_versions/XnViewMP-${MY_PV}-linux-x64.de
 SLOT="0"
 LICENSE="free-noncomm as-is"
 KEYWORDS="~amd64"
-IUSE="+openexr bundled-libs"
+IUSE="openexr bundled-libs"
 
 B_QT_VERSION=5.12.6
 B_QT_WK_VERSION=5.9.0
@@ -178,7 +178,7 @@ src_install() {
 #	cat <<EOF >>"${D}"/opt/bin/xnview
 #exec /opt/XnView/XnView "\$@"
 #EOF
-#	fperms 0755 /opt/bin/xnview
+	fperms +x /opt/XnView/xnview.sh
 
 
 #	# Install icon and .desktop for menu entry
