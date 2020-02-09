@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-tex/dot2texi/dot2texi-3.0.ebuild,v 1.20 2012/04/22 18:30:13 grobian Exp $
 
-EAPI=2
+EAPI=7
 inherit latex-package
 
 DESCRIPTION="Create graphs within LaTeX using the dot2tex tool"
