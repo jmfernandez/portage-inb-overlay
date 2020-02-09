@@ -178,7 +178,7 @@ src_install() {
 #	cat <<EOF >>"${D}"/opt/bin/xnview
 #exec /opt/XnView/XnView "\$@"
 #EOF
-	fperms +x /opt/XnView/xnview.sh
+	fperms +x /opt/XnView/{XnView,xnview.sh}
 
 
 #	# Install icon and .desktop for menu entry
