@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="5"
+EAPI="7"
 
 EGIT_REPO_URI="git://github.com/zbackup/zbackup.git"
-vcs=git-2
+vcs=git-r3
 
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_COMMIT=""
@@ -29,8 +29,6 @@ RDEPEND="sys-libs/zlib
 	app-arch/xz-utils
 	lzo? ( dev-libs/lzo )
 	"
-
-S="${WORKDIR}"
 
 #src_prepare() {
 #	epatch "${FILESDIR}/size-configureable.patch"
