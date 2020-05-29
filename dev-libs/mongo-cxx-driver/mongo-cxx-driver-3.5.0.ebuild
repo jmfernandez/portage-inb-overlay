@@ -12,31 +12,33 @@ SRC_URI="https://github.com/mongodb/${PN}/archive/r${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug libressl sasl ssl static-libs"
+IUSE="debug static-libs"
 
 
 RDEPEND="
 	!dev-db/tokumx
+	>=dev-libs/libbson-1.16.2
 	>=dev-libs/mongo-c-driver-1.16.2
-	dev-libs/boost:=[threads(+)]
-	sasl? ( dev-libs/cyrus-sasl )
-	ssl? (
-		!libressl? ( dev-libs/openssl:0= )
-		libressl? ( dev-libs/libressl:0= )
-	)"
+	"
 DEPEND="${RDEPEND}"
 
-# Maintainer notes
-# TODO: enable test in IUSE with
-# test? ( >=dev-cpp/gtest-1.7.0 dev-db/mongodb )
-
 S="${WORKDIR}/${PN}-r${PV}"
+
+pkg_pretend() {
+	if ! test-flag-CXX -std=c++17; then
+			eerror "${P} requires C++17-capable C++ compiler. Your current compiler"
+			eerror "does not seem to support -std=c++17 option. Please upgrade your compiler"
+			eerror "to gcc-7.4 or an equivalent version supporting C++17."
+			die "Currently active compiler does not support -std=c++17"
+	fi
+}
 
 src_configure() {
 	append-cxxflags -std=c++17
 	
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=ON
+		-DBUILD_SHARED_AND_STATIC_LIBS=$(usex static-libs ON OFF)
 		-DBUILD_VERSION=${PV}
 		-DCMAKE_CXX_STANDARD=17
 		-DENABLE_UNINSTALL=OFF
@@ -45,19 +47,3 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
-#src_compile() {
-#	escons "${scons_opts[@]}"
-#}
-#
-#src_install() {
-#	escons "${scons_opts[@]}" install --prefix="${ED%/}"/usr
-#
-#	# fix multilib-strict QA failures
-#	mv "${ED%/}"/usr/{lib,$(get_libdir)} || die
-#
-#	einstalldocs
-#
-#	if ! use static-libs; then
-#		find "${D}" -name '*.a' -delete || die
-#	fi
-#}
