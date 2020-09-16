@@ -1,0 +1,2 @@
+#!/bin/bash
+LD_PRELOAD="/@@LIBUUIDDIR@@/libuuid.so.1" java -jar /usr/lib/AutoFirma/AutoFirma.jar "$@"
