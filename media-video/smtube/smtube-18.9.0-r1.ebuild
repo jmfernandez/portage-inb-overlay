@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PLOCALES="bg cs da de en_GB en es eu fr gl he_IL hr hu it ja ko ms nn_NO pl pt_BR pt ru sq sr tr uk zh_CN zh_TW"
 PLOCALE_BACKUP="en"
