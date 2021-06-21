@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
-RDEPEND="|| ( >virtual/jre-11 >virtual/jdk-11 )"
+RDEPEND="|| ( >dev-java/openjdk-jre-bin-11 >dev-java/openjdk-bin-11 >virtual/jre-11 >virtual/jdk-11 )"
 
 S="${WORKDIR}"
 
