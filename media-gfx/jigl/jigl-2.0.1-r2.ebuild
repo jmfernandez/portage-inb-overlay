@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=7
 inherit eutils
 
 # NOTE: The comments in this file are for instruction and documentation.
@@ -22,7 +22,10 @@ HOMEPAGE="http://xome.net/projects/jigl/"
 
 # Point to any required sources; these will be automatically downloaded by
 # Portage.
-SRC_URI="http://xome.net/projects/jigl/${P}.tar.gz"
+SRC_URI="
+	http://xome.net/projects/jigl/${P}.tar.gz
+	http://xome.net/projects/jigl/patch-jigl-vs.txt -> jigl-vs-${PV}.patch
+"
 
 # License of the package. This must match the name of file(s) in
 # /usr/portage/licenses/. For complex license combination see the developer
@@ -46,17 +49,29 @@ IUSE=""
 # had installed on your system when you tested the package.  Then
 # other users hopefully won't be caught without the right version of
 # a dependency.
-DEPEND=">=dev-lang/perl-5.6
+DEPEND="dev-lang/perl:=
 	media-gfx/imagemagick
 	>=media-gfx/jhead-2.0"
 
 # Run-time dependencies, same as DEPEND if RDEPEND isn't defined:
 #RDEPEND=""
 
-src_compile() {
-	perl -c jigl.pl || die "perl checking failed"
+src_unpack() {
+	default
+	# Formatting the patch header according to what eapply prefers
+	sed "s#/usr/bin/jigl#jigl-vs#;s#jigl-vs#jigl-${PV}/jigl-vs.pl#" "${DISTDIR}"/jigl-vs-${PV}.patch > "${WORKDIR}"/jigl-vs.patch
+}
+
+src_prepare() {
+	default
 	cp jigl.pl jigl-vs.pl
-	epatch ${FILESDIR}/patch-jigl-vs.txt
+	eapply "${WORKDIR}"/jigl-vs.patch
+}
+
+src_compile() {
+	for p in jigl.pl jigl-vs.pl ; do
+		perl -c "$p" || die "perl checking $p failed"
+	done
 }
 
 src_install() {
