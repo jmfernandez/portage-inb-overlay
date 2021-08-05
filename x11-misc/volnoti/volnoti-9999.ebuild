@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v3
 # $Header: /var/cvsroot/gentoo-x86/media-sound/volti/volnoti-0.1.ebuild $
 
-EAPI=5
+EAPI=7
 
 if [[ ${PV} = *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/hcchu/volnoti.git"
@@ -30,7 +30,7 @@ RDEPEND="sys-apps/dbus
          dev-libs/dbus-glib
          x11-libs/gtk+
          x11-libs/gdk-pixbuf"
-DEPEND="dev-util/pkgconfig"
+DEPEND="virtual/pkgconfig"
 
 src_prepare() {
 	eautoreconf
