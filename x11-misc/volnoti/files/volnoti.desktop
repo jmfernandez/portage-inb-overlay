@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Volnoti
+Exec=volnoti -t 1
+NoDisplay=true
