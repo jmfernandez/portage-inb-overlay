@@ -1,51 +1,61 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit bash-completion-r1 systemd udev
+PYTHON_COMPAT=( python3_{7..10} )
+
+inherit bash-completion-r1 distutils-r1 systemd udev
+
+if [[ "${PV}" = "9999" ]] ; then
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/phillipberndt/${PN}.git"
+else
+	SRC_URI="https://github.com/phillipberndt/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 DESCRIPTION="Automatically select a display configuration based on connected devices"
 HOMEPAGE="https://github.com/phillipberndt/autorandr"
-SRC_URI="https://github.com/phillipberndt/${PN}/archive/${PV}.tar.gz"
 
-LICENSE="GPL-3+"
+LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
-IUSE="bash-completion pm-utils systemd udev"
+IUSE="bash-completion launcher systemd udev"
 
-DEPEND="
-	virtual/pkgconfig
-	${RDEPEND}
-"
 RDEPEND="
 	bash-completion? ( app-shells/bash )
-	pm-utils? ( sys-power/pm-utils )
-	systemd? ( sys-apps/systemd )
+	launcher? ( x11-libs/libxcb )
 	udev? ( virtual/udev )
 "
+DEPEND="${RDEPEND}"
+BDEPEND="virtual/pkgconfig"
+
+src_compile() {
+	distutils-r1_src_compile
+
+	if use launcher; then
+		emake contrib/autorandr_launcher/autorandr-launcher
+	fi
+}
 
 src_install() {
-	targets="autorandr autostart_config"
-	if use bash-completion; then
-		targets="$targets bash_completion"
-	fi
-	if use pm-utils; then
-		targets="$targets pmutils"
-	fi
-	if use systemd; then
-		targets="$targets systemd"
-	fi
-	if use udev; then
-		targets="$targets udev"
-	fi
+	distutils-r1_src_install
+
+	doman autorandr.1
+
+	local targets=(
+		autostart_config
+		$(usex bash-completion bash_completion '')
+		$(usev systemd)
+		$(usev launcher)
+		$(usev udev)
+	)
 
 	emake DESTDIR="${D}" \
-		  install \
-		  BASH_COMPLETION_DIR="$(get_bashcompdir)" \
+		  BASH_COMPLETIONS_DIR="$(get_bashcompdir)" \
 		  SYSTEMD_UNIT_DIR="$(systemd_get_systemunitdir)" \
 		  UDEV_RULES_DIR="$(get_udevdir)"/rules.d \
-		  TARGETS="$targets"
+		  $(printf "install_%s " "${targets[@]}")
 }
 
 pkg_postinst() {
