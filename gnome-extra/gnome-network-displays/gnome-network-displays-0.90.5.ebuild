@@ -1,9 +1,9 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit gnome-meson meson
+inherit meson
 
 DESCRIPTION="GNOME Remote Desktop screen share service"
 HOMEPAGE="https://gitlab.gnome.org/GNOME/gnome-network-displays"
