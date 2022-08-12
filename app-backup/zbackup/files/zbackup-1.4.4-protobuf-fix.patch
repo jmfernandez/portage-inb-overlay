@@ -1,0 +1,13 @@
+diff --git a/backup_restorer.cc b/backup_restorer.cc
+index 3b83cd0..a4ab2d5 100644
+--- a/backup_restorer.cc
++++ b/backup_restorer.cc
+@@ -27,7 +27,7 @@ void restore( ChunkStorage::Reader & chunkStorageReader,
+   // TODO: this disables size checks for each separate message. Figure a better
+   // way to do this while keeping them enabled. It seems we need to create an
+   // instance of CodedInputStream for each message, but it might be expensive
+-  cis.SetTotalBytesLimit( backupData.size(), -1 );
++  cis.SetTotalBytesLimit( backupData.size() );
+ 
+   // Used when emitting chunks
+   string chunk;
