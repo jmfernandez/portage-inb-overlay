@@ -19,7 +19,7 @@ IUSE=""
 RDEPEND="
 	>=app-crypt/argon2-20190702
 	>=dev-cpp/tclap-1.2.2
-	<=dev-libs/crypto++-8.3.0:=
+	<=dev-libs/crypto++-8.6.0:=
 	>=dev-libs/libutf8proc-2.5.0
 	>=dev-libs/jsoncpp-1.9.4
 	>=sys-fs/fuse-2.9.9:0
