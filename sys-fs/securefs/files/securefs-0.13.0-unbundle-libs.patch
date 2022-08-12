@@ -1,0 +1,95 @@
+diff -Nru a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2022-05-06 17:00:58.000000000 +0200
++++ b/CMakeLists.txt	2022-08-12 13:47:45.675383815 +0200
+@@ -26,14 +26,17 @@
+ configure_file(${CMAKE_SOURCE_DIR}/sources/git-version.cpp.in
+                ${CMAKE_BINARY_DIR}/git-version.cpp)
+ 
+-file(COPY ${CMAKE_SOURCE_DIR}/external/cmake-cryptopp/CMakeLists.txt
+-     DESTINATION ${CMAKE_SOURCE_DIR}/external/cryptopp)
+-
+ if(UNIX)
+-    find_path(FUSE_INCLUDE_DIR fuse.h PATHS /usr/local/include)
+-    find_library(FUSE_LIBRARIES fuse PATHS /usr/local/lib)
++    include(FindPkgConfig)
++    pkg_check_modules(FUSE REQUIRED fuse>=2.9.0)
+     include_directories(${FUSE_INCLUDE_DIR})
+     link_libraries(${FUSE_LIBRARIES})
++
++    include(FindPkgConfig)
++    pkg_check_modules(UTF8PROC REQUIRED libutf8proc>=2.3.2)
++    include_directories(${UTF8PROC_INCLUDE_DIR})
++    link_libraries(${UTF8PROC_LIBRARIES})
++
+     add_compile_options(-Wall -Wextra -Wno-unknown-pragmas)
+ 
+     if(APPLE)
+@@ -87,13 +90,25 @@
+ set(EXTERNAL_DIR external)
+ include_directories(${EXTERNAL_DIR})
+ 
+-set(CRYPTOPP_DIR ${EXTERNAL_DIR}/cryptopp)
+-add_subdirectory(${CRYPTOPP_DIR})
+-link_libraries(cryptopp-static)
+-
+-add_subdirectory(${EXTERNAL_DIR}/argon2)
+-include_directories(${EXTERNAL_DIR}/argon2/include)
+-link_libraries(argon2_static)
++include(FindPkgConfig)
++pkg_check_modules(CRYPTOPP REQUIRED libcryptopp>=8.2)
++include_directories(${CRYPTOPP_INCLUDE_DIR})
++link_libraries(${CRYPTOPP_LIBRARIES})
++
++include(FindPkgConfig)
++pkg_check_modules(TCLAP REQUIRED tclap>=1.2.2)
++include_directories(${TCLAP_INCLUDE_DIR})
++link_libraries(${TCLAP_LIBRARIES})
++
++include(FindPkgConfig)
++pkg_check_modules(ARGON2 REQUIRED libargon2>=0~20190702)
++include_directories(${ARGON2_INCLUDE_DIR})
++link_libraries(${ARGON2_LIBRARIES})
++
++include(FindPkgConfig)
++pkg_check_modules(JSONCPP REQUIRED jsoncpp>=1.9.4)
++include_directories(${JSONCPP_INCLUDE_DIR})
++link_libraries(${JSONCPP_LIBRARIES})
+ 
+ file(
+     GLOB
+@@ -102,10 +117,8 @@
+     sources/*.h
+     ${EXTERNAL_DIR}/*.h
+     ${EXTERNAL_DIR}/*.hpp
+-    ${EXTERNAL_DIR}/*.cpp
+     ${CMAKE_BINARY_DIR}/git-version.cpp
+-    ${EXTERNAL_DIR}/utf8proc/utf8proc.h
+-    ${EXTERNAL_DIR}/utf8proc/utf8proc.c)
++)
+ file(GLOB TEST_SOURCES test/*.h test/*.cpp)
+ add_library(securefs-static STATIC ${SOURCES})
+ link_libraries(securefs-static)
+diff -Nru a/sources/commands.cpp b/sources/commands.cpp
+--- a/sources/commands.cpp	2022-05-06 17:00:58.000000000 +0200
++++ b/sources/commands.cpp	2022-08-12 13:34:48.762441208 +0200
+@@ -17,7 +17,7 @@
+ #include <fuse.h>
+ #include <json/json.h>
+ #include <tclap/CmdLine.h>
+-#include <utf8proc/utf8proc.h>
++#include <utf8proc.h>
+ 
+ #include <algorithm>
+ #include <iostream>
+diff -Nru a/sources/mystring.cpp b/sources/mystring.cpp
+--- a/sources/mystring.cpp	2022-05-06 17:00:58.000000000 +0200
++++ b/sources/mystring.cpp	2022-08-12 13:35:17.765439065 +0200
+@@ -3,7 +3,7 @@
+ #include "logger.h"
+ #include "myutils.h"
+ 
+-#include <utf8proc/utf8proc.h>
++#include <utf8proc.h>
+ 
+ #include <ctype.h>
+ #include <errno.h>
