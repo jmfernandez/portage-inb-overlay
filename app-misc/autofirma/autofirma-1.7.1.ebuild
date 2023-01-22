@@ -5,9 +5,11 @@ EAPI=7
 
 inherit desktop pax-utils unpacker xdg multilib
 
-DESCRIPTION="DNIe remote Linux client"
-HOMEPAGE="https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_1015&id_menu=68"
-SRC_URI="https://estaticos.redsara.es/comunes/autofirma/currentversion/AutoFirma_Linux.zip -> ${P}.zip"
+MY_PV="${PV//.//}"
+
+DESCRIPTION="AutoFirma"
+HOMEPAGE="https://firmaelectronica.gob.es/Home/Descargas.html"
+SRC_URI="https://estaticos.redsara.es/comunes/autofirma/${MY_PV}/AutoFirma_Linux.zip -> ${P}.zip"
 
 LICENSE="as-is"
 SLOT="0"
