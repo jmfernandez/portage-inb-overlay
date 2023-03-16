@@ -4,7 +4,7 @@
 EAPI=8
 
 # Upstream only support 5.3 (see CMakeLists.txt), also bug #854615
-LUA_COMPAT=( lua5-3 )
+LUA_COMPAT=( lua5-3 lua5-4 )
 inherit cmake lua-single xdg
 
 if [[ ${PV} == *9999 ]]; then
