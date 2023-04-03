@@ -6,10 +6,10 @@ EAPI=8
 inherit cmake xdg
 
 DESCRIPTION="Git credential helper for KWallet"
-HOMEPAGE="https://github.com/Templar-von-Midgard/git-credential-kwallet/"
+HOMEPAGE="https://github.com/jmfernandez/git-credential-kwallet/"
 
-EGIT_REPO_URI="https://github.com/Templar-von-Midgard/git-credential-kwallet.git"
-EGIT_COMMIT="4a85fd8d0c8108be65c6c8d7ae81eb0cd836c705"
+EGIT_REPO_URI="https://github.com/jmfernandez/git-credential-kwallet.git"
+EGIT_COMMIT="d284b2578d6e5e5245bb7b8f92dabb1450a53d7f"
 SRC_URI="${HOMEPAGE}/archive/${EGIT_COMMIT}.tar.gz -> ${P}_${EGIT_COMMIT}.tar.gz"
 S="${WORKDIR}/${PN}-${EGIT_COMMIT}"
 
