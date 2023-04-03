@@ -44,6 +44,16 @@ LICENSE="0BSD Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD BSD-2 Boost-1.0 ISC
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 
+RDEPEND="
+	virtual/resolvconf
+	net-misc/connman
+	|| (
+		net-dns/unbound
+		net-dns/dnsmasq
+	)
+"
+
+
 S="${WORKDIR}/connman-resolvconf-${PV}"
 
 # Rust packages ignore CFLAGS and LDFLAGS so let's silence the QA warnings
