@@ -19,7 +19,7 @@ KEYWORDS="~amd64"
 DEPEND=""
 RDEPEND="
 	x11-libs/gtk+:3
-	dev-libs/gobject-instrospection
+	dev-libs/gobject-introspection
 "
 BDEPEND="
 	sys-devel/make
