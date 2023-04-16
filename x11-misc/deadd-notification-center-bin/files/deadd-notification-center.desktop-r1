@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+TryExec=deadd-notification-center
+Exec=deadd-notification-center
+#OnlyShowIn=LXQt;
+#X-LXQt-Module=true
+
+Name=Deadd Notification Daemon
