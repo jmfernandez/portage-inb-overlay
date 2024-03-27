@@ -1,0 +1,11 @@
+diff -Nru zbackup-1.4.4/CMakeLists.txt zbackup-1.4.4_patched/CMakeLists.txt
+--- zbackup-1.4.4/CMakeLists.txt	2024-03-27 04:26:01.348978740 +0100
++++ zbackup-1.4.4_patched/CMakeLists.txt	2024-03-27 04:30:44.982307789 +0100
+@@ -14,6 +14,7 @@
+ find_package( OpenSSL REQUIRED )
+ include_directories( ${OPENSSL_INCLUDE_DIR} )
+ 
++find_package( absl REQUIRED )
+ find_package( Protobuf REQUIRED )
+ include_directories( ${PROTOBUF_INCLUDE_DIRS} )
+ include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
