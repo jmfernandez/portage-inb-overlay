@@ -3,9 +3,10 @@
 
 EAPI=8
 
-DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{10..11} )
+PYTHON_REQ_USE="xml(+)"
+DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 xdg
 
@@ -37,17 +38,22 @@ BDEPEND="$(python_gen_cond_dep '
 	')"
 
 PATCHES=( "${FILESDIR}/${P}-fix-pybuild.patch" )
+src_prepare() {
+	distutils-r1_python_prepare_all
+	# prevent setup.py from trying to update MIME databases
+	sed -i 's/^ROOT =.*/ROOT = False/' setup.py || die
+}
 
 python_compile_all() {
 	use doc && emake -C doc html
 }
 
+python_test() {
+	distutils_install_for_testing
+	"${EPYTHON}" src/tests/query_tests.py -v --platform minimal || die
+}
+
 python_install_all() {
 	use doc && local HTML_DOCS=( doc/_build/html/. )
 	distutils-r1_python_install_all
-}
-
-python_test() {
-	cd "${BUILD_DIR}/install$(python_get_sitedir)/${PN}_qt/" || die
-	"${EPYTHON}" tests/query_tests.py -v --platform minimal  || die
 }
