@@ -22,7 +22,7 @@ RDEPEND="
 	dev-libs/gobject-introspection
 "
 BDEPEND="
-	sys-devel/make
+	dev-build/make
 "
 
 QA_PREBUILT="
