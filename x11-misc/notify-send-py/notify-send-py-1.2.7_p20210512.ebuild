@@ -6,7 +6,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=flit
 PYPI_PN=notify-send.py
 PYPI_NO_NORMALIZE=true
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{9..12} )
 EGIT_COMMIT=0575c79f10d10892c41559dd3695346d16a8b184
 inherit distutils-r1
 
