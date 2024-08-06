@@ -48,7 +48,7 @@ RDEPEND="app-accessibility/at-spi2-atk:2[${MULTILIB_USEDEP}]
 	x11-libs/libxkbfile:0[${MULTILIB_USEDEP}]
 	x11-libs/libXrandr:0[${MULTILIB_USEDEP}]
 	x11-libs/pango:0[${MULTILIB_USEDEP}]
-	appindicator? ( dev-libs/libayatana-appindicator:3[${MULTILIB_USEDEP}] )"
+	appindicator? ( dev-libs/libayatana-appindicator:0[${MULTILIB_USEDEP}] )"
 
 QA_PREBUILT="opt/${PN}/chrome-sandbox
 	opt/${PN}/chrome_crashpad_handler
