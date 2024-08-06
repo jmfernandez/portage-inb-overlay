@@ -8,7 +8,7 @@ MULTILIB_COMPAT=( abi_x86_64 )
 inherit desktop multilib-build optfeature pax-utils unpacker xdg
 
 DESCRIPTION="MongoDB Compass (isolated edition)"
-HOMEPAGE="https://compass.mongodb.com/"
+HOMEPAGE="https://www.mongodb.com/products/compass"
 
 LICENSE="SSPL-1"
 SLOT="0"
@@ -48,7 +48,7 @@ RDEPEND="app-accessibility/at-spi2-atk:2[${MULTILIB_USEDEP}]
 	x11-libs/libxkbfile:0[${MULTILIB_USEDEP}]
 	x11-libs/libXrandr:0[${MULTILIB_USEDEP}]
 	x11-libs/pango:0[${MULTILIB_USEDEP}]
-	appindicator? ( dev-libs/libappindicator:3[${MULTILIB_USEDEP}] )"
+	appindicator? ( dev-libs/libayatana-appindicator:3[${MULTILIB_USEDEP}] )"
 
 QA_PREBUILT="opt/${PN}/chrome-sandbox
 	opt/${PN}/chrome_crashpad_handler
@@ -71,11 +71,11 @@ src_prepare() {
 		usr/share/applications/${PN}.desktop \
 		|| die "sed failed for ${PN}.desktop"
 	
-	if use appindicator ; then
-		sed -i '/Exec/s|=|=env XDG_CURRENT_DESKTOP=Unity |' \
-			usr/share/applications/${PN}.desktop \
-			|| die "sed failed for ${PN}.desktop"
-	fi
+	#if use appindicator ; then
+	#	sed -i '/Exec/s|=|=env XDG_CURRENT_DESKTOP=Unity |' \
+	#		usr/share/applications/${PN}.desktop \
+	#		|| die "sed failed for ${PN}.desktop"
+	#fi
 }
 
 src_install() {
