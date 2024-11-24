@@ -56,6 +56,10 @@ pkg_setup() {
 
 src_prepare() {
 	cmake_src_prepare
+
+	# Compilation of stabilizedata.pb.cc fails because it uses
+	# features from c++17 standard
+	sed -i -e 's/CMAKE_CXX_STANDARD 14/CMAKE_CXX_STANDARD 17/' CMakeLists.txt || die "sed failed"
 	# https://github.com/OpenShot/libopenshot/issues/17
 	use test || cmake_comment_add_subdirectory tests
 }
@@ -80,6 +84,7 @@ src_configure() {
 		-DPYTHON_INCLUDE_DIR="$(python_get_includedir)"
 		-DPYTHON_LIBRARY="$(python_get_library_path)"
 	)
+	filter-flags '-std=c++*'
 	cmake_src_configure
 }
 
