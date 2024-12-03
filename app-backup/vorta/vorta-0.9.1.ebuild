@@ -18,7 +18,7 @@ SLOT="0"
 
 RDEPEND="
 	<dev-python/platformdirs-5.0.0[${PYTHON_USEDEP}]
-	>=dev-python/PyQt6-6.6.1[${PYTHON_USEDEP}]
+	>=dev-python/pyqt6-6.6.1[${PYTHON_USEDEP}]
 	>=dev-python/peewee-3.14.8[${PYTHON_USEDEP}]
 	>=dev-python/psutil-5.7.3[${PYTHON_USEDEP}]
 	>=dev-python/secretstorage-3.3.1[${PYTHON_USEDEP}]
