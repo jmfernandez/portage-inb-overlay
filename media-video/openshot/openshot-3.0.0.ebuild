@@ -23,8 +23,8 @@ IUSE="doc"
 
 RDEPEND="$(python_gen_cond_dep '
 		dev-python/httplib2[${PYTHON_USEDEP}]
-		dev-python/PyQt5[${PYTHON_USEDEP},gui,svg,widgets]
-		dev-python/PyQtWebEngine[${PYTHON_USEDEP}]
+		dev-python/pyqt5[${PYTHON_USEDEP},gui,svg,widgets]
+		dev-python/pyqtWebEngine[${PYTHON_USEDEP}]
 		dev-python/pyzmq[${PYTHON_USEDEP}]
 		dev-python/requests[${PYTHON_USEDEP}]
 	')
