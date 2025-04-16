@@ -26,7 +26,7 @@ RDEPEND="dev-libs/jsoncpp:0=
 	dev-qt/qtmultimedia:5[widgets]
 	dev-qt/qtsvg:5
 	>=media-libs/libopenshot-audio-0.3.0:0=
-	media-video/ffmpeg:0=[encode,x264,xvid,vpx,mp3,theora,vorbis]
+	media-video/ffmpeg:0=[lame,x264,xvid,vpx,theora,vorbis]
 	net-libs/cppzmq
 	net-libs/zeromq
 	babl? ( media-libs/babl )
