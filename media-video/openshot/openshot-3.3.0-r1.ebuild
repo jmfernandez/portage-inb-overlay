@@ -3,7 +3,9 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
+DISTUTILS_USE_PEP517=setuptools
+#DISTUTILS_USE_PEP517=no
 PYTHON_REQ_USE="xml(+)"
 DISTUTILS_SINGLE_IMPL=1
 
@@ -26,11 +28,10 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RDEPEND="$(python_gen_cond_dep '
 	dev-python/httplib2[${PYTHON_USEDEP}]
 	dev-python/pyqt5[${PYTHON_USEDEP},gui,svg,widgets]
-	dev-python/pyqtwebengine[${PYTHON_USEDEP}]
 	dev-python/pyzmq[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	')
-	>=media-libs/libopenshot-0.3.2:0=[python,${PYTHON_SINGLE_USEDEP}]"
+	>=media-libs/libopenshot-0.4.0:0=[python,${PYTHON_SINGLE_USEDEP}]"
 DEPEND=""
 BDEPEND="$(python_gen_cond_dep '
 		doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
@@ -41,6 +42,10 @@ src_prepare() {
 	distutils-r1_python_prepare_all
 	# prevent setup.py from trying to update MIME databases
 	sed -i 's/^ROOT =.*/ROOT = False/' setup.py || die
+
+	# Installer directory is harming the install machinery
+	# from gpep517
+	mv installer installer_orig
 }
 
 python_compile_all() {
