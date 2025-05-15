@@ -34,7 +34,7 @@ src_install() {
 	else
 		die "Can't find GIMP plugin directory."
 	fi
-	insinto "${plugindir}/${PN}"
+	insinto "${plugindir}/xsanecli"
 	insopts -m755
 	doins xsanecli.py
 }
