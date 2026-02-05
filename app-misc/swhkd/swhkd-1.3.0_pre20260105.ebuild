@@ -159,3 +159,8 @@ pkg_setup() {
 	
 	rust_pkg_setup
 }
+
+src_install() {
+	cargo_src_install
+	newinitd "${WORKDIR}"/${PN}-${SWHKD_GIT_REF}/contrib/init/openrc/swhkd swhkd
+}
