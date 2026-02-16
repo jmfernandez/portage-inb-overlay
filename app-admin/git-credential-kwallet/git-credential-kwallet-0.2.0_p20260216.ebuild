@@ -21,7 +21,7 @@ QTMIN=6.10.0
 KFMIN=6.22.0
 
 DEPEND="
-	dev-qt/qtcore:6
+	dev-qt/qtbase:6
 	>=kde-frameworks/kwallet-${KFMIN}:6
 "
 
