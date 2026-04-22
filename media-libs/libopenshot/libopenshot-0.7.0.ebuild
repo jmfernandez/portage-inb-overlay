@@ -19,13 +19,15 @@ IUSE="babl doc examples +imagemagick +opencv +python test"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 RESTRICT="!test? ( test )"
 
+PV_AUDIO=0.6.0
+
 RDEPEND="dev-libs/jsoncpp:0=
 	dev-libs/protobuf:=
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtmultimedia:5[widgets]
 	dev-qt/qtsvg:5
-	>=media-libs/libopenshot-audio-${PV}:0=
+	>=media-libs/libopenshot-audio-${PV_AUDIO}:0=
 	>=media-video/ffmpeg-6.1.2-r1:0=[lame,x264,xvid,vpx,theora,vorbis]
 	net-libs/cppzmq
 	net-libs/zeromq
