@@ -1,19 +1,19 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-inherit desktop linux-info readme.gentoo-r1 xdg-utils
+inherit desktop eapi9-pipestatus linux-info readme.gentoo-r1 xdg-utils
 
 DESCRIPTION="Video conferencing and web conferencing service"
-HOMEPAGE="https://zoom.us/"
+HOMEPAGE="https://www.zoom.com/"
 SRC_URI="https://zoom.us/client/${PV}/${PN}_x86_64.tar.xz -> ${P}_x86_64.tar.xz"
 S="${WORKDIR}/${PN}"
 
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="-* ~amd64"
-IUSE="+bundled-qt opencl pulseaudio wayland +zoom-symlink"
+IUSE="opencl pulseaudio wayland +zoom-symlink"
 RESTRICT="mirror bindist strip"
 
 RDEPEND="zoom-symlink? ( !games-engines/zoom )
@@ -23,7 +23,6 @@ RDEPEND="zoom-symlink? ( !games-engines/zoom )
 	dev-libs/glib:2
 	dev-libs/nspr
 	dev-libs/nss
-	>=dev-libs/quazip-1.0:0=[qt5(+)]
 	media-libs/alsa-lib
 	media-libs/fdk-aac:0/2
 	media-libs/fontconfig
@@ -34,10 +33,14 @@ RDEPEND="zoom-symlink? ( !games-engines/zoom )
 	sys-apps/dbus
 	sys-apps/util-linux
 	sys-libs/glibc
-	sys-libs/zlib
+	virtual/glu
+	virtual/libudev
 	virtual/opengl
+	virtual/zlib:=
 	x11-libs/cairo
 	x11-libs/libdrm
+	x11-libs/libICE
+	x11-libs/libSM
 	x11-libs/libX11
 	x11-libs/libxcb
 	x11-libs/libXcomposite
@@ -50,32 +53,17 @@ RDEPEND="zoom-symlink? ( !games-engines/zoom )
 	x11-libs/libxshmfence
 	x11-libs/libXtst
 	x11-libs/pango
+	x11-libs/xcb-util-cursor
 	x11-libs/xcb-util-image
 	x11-libs/xcb-util-keysyms
 	x11-libs/xcb-util-renderutil
 	x11-libs/xcb-util-wm
-	opencl? ( virtual/opencl )
+	opencl? (
+		sys-devel/gcc:*[openmp]
+		virtual/opencl
+	)
 	pulseaudio? ( media-libs/libpulse )
-	wayland? ( dev-libs/wayland )
-	!bundled-qt? (
-		dev-libs/icu
-		dev-qt/qt3d:5
-		dev-qt/qtcore:5
-		dev-qt/qtdbus:5
-		dev-qt/qtdeclarative:5[widgets]
-		dev-qt/qtdiag:5
-		dev-qt/qtgraphicaleffects:5
-		dev-qt/qtgui:5
-		dev-qt/qtlocation:5
-		dev-qt/qtnetwork:5
-		dev-qt/qtquickcontrols:5[widgets]
-		dev-qt/qtquickcontrols2:5
-		dev-qt/qtsvg:5
-		dev-qt/qtwidgets:5
-		dev-qt/qtx11extras:5
-		dev-qt/qtxml:5
-		wayland? ( dev-qt/qtwayland )
-	)"
+	wayland? ( dev-libs/wayland )"
 
 BDEPEND="dev-util/bbe"
 
@@ -102,16 +90,16 @@ src_prepare() {
 src_install() {
 	insinto /opt/zoom
 	exeinto /opt/zoom
-	doins -r calendar cef chatapp diagnostic email js json ringtone \
-		scheduler sip timezones translations
-	doins *.pcm Embedded.properties qt.conf version.txt
-	doexe zoom zopen ZoomLauncher ZoomWebviewHost *.sh \
-		aomhost libaomagent.so libcml.so libdvf.so libmkldnn.so \
-		libavcodec.so* libavformat.so* libavutil.so* libswresample.so*
-	fperms a+x /opt/zoom/cef/chrome-sandbox
+	doins -r calendar cef diagnostic email imjs js json ringtone sip \
+		timezones translations
+	doins *.pcm Embedded.properties version.txt unifywebview_config.zip
+	doexe zoom zopen ZoomClips ZoomLauncher ZoomWebviewHost *.sh \
+		aomhost cpthost libaomagent.so libcml.so libdvf.so libmkldnn.so \
+		libquazip.so libavcodec.so* libavformat.so* libavutil.so* \
+		libswresample.so*
+	fperms a+x /opt/zoom/cef/chrome_sandbox
 	dosym -r {"/usr/$(get_libdir)",/opt/zoom}/libmpg123.so
 	dosym -r "/usr/$(get_libdir)/libfdk-aac.so.2" /opt/zoom/libfdkaac2.so
-	dosym -r "/usr/$(get_libdir)/libquazip1-qt5.so" /opt/zoom/libquazip.so
 
 	if use opencl; then
 		doexe libclDNN64.so
@@ -123,33 +111,33 @@ src_install() {
 		rm "${ED}"/opt/zoom/cef/libGLESv2.so || die
 	fi
 
-	if use bundled-qt; then
-		doins -r Qt
-		find Qt -type f '(' -name '*.so' -o -name '*.so.*' ')' \
-			-printf '/opt/zoom/%p\0' | xargs -0 -r fperms 0755 || die
-		(	# Remove libs and plugins with unresolved soname dependencies.
-			# Why does the upstream package contain such garbage? :-(
-			cd "${ED}"/opt/zoom/Qt || die
-			rm -r plugins/egldeviceintegrations \
-				plugins/platforms/libqeglfs.so \
-				plugins/platforms/libqlinuxfb.so \
-				qml/Qt/labs/lottieqt \
-				qml/QtQml/RemoteObjects \
-				qml/QtQuick/Scene2D \
-				qml/QtQuick/Scene3D \
-				qml/QtQuick/XmlListModel || die
-			use wayland || rm -r lib/libQt5Wayland*.so* plugins/wayland* \
-				plugins/platforms/libqwayland*.so qml/QtWayland || die
-		)
-	else
-		local qtzoom="5.15" qtver=$(best_version dev-qt/qtcore:5)
-		if [[ ${qtver} != dev-qt/qtcore-${qtzoom}.* ]]; then
-			ewarn "You have disabled the bundled-qt USE flag."
-			ewarn "You may experience problems when running Zoom with"
-			ewarn "a version of the system-wide Qt libs other than ${qtzoom}."
-			ewarn "See https://bugs.gentoo.org/798681 for details."
-		fi
-	fi
+	doins -r Qt
+	find Qt -type f '(' -name '*.so' -o -name '*.so.*' ')' \
+		-printf '/opt/zoom/%p\0' | xargs -0 -r fperms 0755
+	pipestatus || die
+	(	# Remove libs and plugins with unresolved soname dependencies.
+		# Why does the upstream package contain such garbage? :-(
+###  rm -r plugins/audio plugins/egldeviceintegrations
+### plugins/platforms/libqeglfs.so plugins/platforms/libqlinuxfb.so
+### plugins/platformthemes/libqgtk3.so qml/QtQml/RemoteObjects
+### qml/QtQuick/LocalStorage qml/QtQuick/Particles.2 qml/QtQuick/Scene2D
+### qml/QtQuick/Scene3D qml/QtQuick/XmlListModel || die;
+#rm: cannot remove 'plugins/audio': No such file or directory
+#rm: cannot remove 'qml/QtQml/RemoteObjects': No such file or directory
+#rm: cannot remove 'qml/QtQuick/Particles.2': No such file or directory
+#rm: cannot remove 'qml/QtQuick/Scene2D': No such file or directory
+#rm: cannot remove 'qml/QtQuick/Scene3D': No such file or directory
+#rm: cannot remove 'qml/QtQuick/XmlListModel': No such file or directory
+
+		cd "${ED}"/opt/zoom/Qt || die
+		rm -r plugins/egldeviceintegrations \
+			plugins/platforms/libqeglfs.so \
+			plugins/platforms/libqlinuxfb.so \
+			plugins/platformthemes/libqgtk3.so \
+			qml/QtQuick/LocalStorage || die
+		use wayland || rm -r lib/libQt5Wayland*.so* plugins/wayland* \
+			plugins/platforms/libqwayland*.so qml/QtWayland || die
+	)
 
 	use zoom-symlink && dosym -r /opt/zoom/ZoomLauncher /usr/bin/zoom
 
@@ -159,7 +147,6 @@ src_install() {
 			x-scheme-handler/zoommtg \
 			x-scheme-handler/zoomus \
 			application/x-zoom)"
-	mv "${ED}"/usr/share/applications/{ZoomLauncher-,}zoom.desktop || die
 	doicon videoconference-zoom.svg
 	doicon -s scalable videoconference-zoom.svg
 
