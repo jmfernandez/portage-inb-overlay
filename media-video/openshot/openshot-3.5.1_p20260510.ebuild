@@ -31,7 +31,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="$(python_gen_cond_dep '
 	dev-python/httplib2[${PYTHON_USEDEP}]
-	dev-python/pyqt6[${PYTHON_USEDEP},gui,svg,widgets]
+	dev-python/pyside[${PYTHON_USEDEP},gui,statemachine,svg,uitools,widgets]
 	dev-python/pyzmq[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	')
