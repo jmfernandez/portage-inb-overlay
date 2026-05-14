@@ -41,7 +41,7 @@ BDEPEND="$(python_gen_cond_dep '
 		doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
 	')"
 
-PATCHES=( "${FILESDIR}/${P}-fix-pybuild.patch" )
+PATCHES=( "${FILESDIR}/${P}-fix-pybuild.patch" "${FILESDIR}/${P}-fix-bootstrap.patch" )
 src_prepare() {
 	distutils-r1_python_prepare_all
 	# prevent setup.py from trying to update MIME databases

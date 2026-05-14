@@ -1,0 +1,11 @@
+diff '--color=auto' -Nru a/openshot-qt-87f1927e1ac59c7d0671161671eed567935a0e53/src/__init__.py b/openshot-qt-87f1927e1ac59c7d0671161671eed567935a0e53/src/__init__.py
+--- a/src/__init__.py	2026-05-10 21:20:43.000000000 +0200
++++ b/src/__init__.py	2026-05-14 20:08:24.991392289 +0200
+@@ -29,3 +29,7 @@
+ 
+ # Determine path to this module
+ OPENSHOT_PATH = os.path.dirname(os.path.realpath(__file__))
++
++import sys
++sys.path.insert(0, OPENSHOT_PATH)
++
