@@ -1,0 +1,12 @@
+diff '--color=auto' -Nru a/criu-4.2/Makefile.config b/criu-4.2/Makefile.config
+--- a/Makefile.config	2025-11-13 17:40:46.000000000 +0100
++++ b/Makefile.config	2026-06-30 17:15:55.181470413 +0200
+@@ -86,7 +86,7 @@
+ 
+ FEATURES_LIST	:= TCP_REPAIR PTRACE_PEEKSIGINFO \
+ 	SETPROCTITLE_INIT TCP_REPAIR_WINDOW MEMFD_CREATE \
+-	OPENAT2 NO_LIBC_RSEQ_DEFS
++	OPENAT2
+ 
+ # $1 - config name
+ define gen-feature-test

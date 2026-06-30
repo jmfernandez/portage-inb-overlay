@@ -58,6 +58,7 @@ PATCHES=(
 	"${FILESDIR}/2.3/criu-2.3-no-git.patch"
 	"${FILESDIR}/criu-3.12-automagic-libbsd.patch"
 	"${FILESDIR}/criu-4.1-no-werror.patch"
+	"${FILESDIR}/criu-4.2-no-check-rseq.patch"
 )
 
 FILECAPS=(
