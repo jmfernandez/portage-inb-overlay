@@ -106,6 +106,8 @@ src_install() {
 	dosym -r {"/usr/$(get_libdir)",/opt/zoom}/libmpg123.so
 	dosym -r "/usr/$(get_libdir)/libfdk-aac.so.2" /opt/zoom/libfdkaac2.so
 	dosym -r "/usr/$(get_libdir)/libquazip1-qt6.so" /opt/zoom/libquazip.so
+	dodir /opt/zoom/Qt && dosym -r "/usr/$(get_libdir)" /opt/zoom/Qt/lib
+
 
 	if use opencl; then
 		doexe libclDNN64.so
